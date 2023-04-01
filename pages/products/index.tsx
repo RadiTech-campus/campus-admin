@@ -400,14 +400,17 @@ export default function Products() {
       <TableContainer>
         <TopButtonContainer>
           <TopButtonLeft>
+            <Link href="/products/">
+              <ProductButton type="button">상품목록</ProductButton>
+            </Link>
             <Link href="/products/addproduct">
-              <ProductButton type="button">상품추가</ProductButton>
+              <ProductButton type="button">상품등록</ProductButton>
             </Link>
             {/* <ProductButton type="button">상품수정</ProductButton>
             <ProductButton type="button">상품삭제</ProductButton> */}
           </TopButtonLeft>
           <TopButtonRight>
-            <form>
+            {/* <form>
               <ProductButton
                 type="submit"
                 onClick={(e) => {
@@ -430,7 +433,7 @@ export default function Products() {
                 ref={ref}
                 onChange={handleOnChange}
               />
-            </form>
+            </form> */}
           </TopButtonRight>
 
           {/* <TopButton dd>

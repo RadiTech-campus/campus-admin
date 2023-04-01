@@ -64,31 +64,40 @@ export default function Sidebar(): any {
           </CompanyName>
         )}
 
-        {/* // TODO 로그인 후 처리 */}
-        <Link href="/" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath === "/"}>대시보드</MenuButton>
-        </Link>
-        <Link href="/orders" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath.includes("/orders/")}>
-            주문
+        <Link href="/banners" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath === "/banners/"}>
+            배너등록
           </MenuButton>
         </Link>
-
+        <Link href="/contents" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath === "/contents/"}>
+            컨텐츠등록
+          </MenuButton>
+        </Link>
         <Link href="/products" style={{ textDecoration: "none" }}>
           <MenuButton selected={router.asPath === "/products/"}>
-            상품
-          </MenuButton>
-        </Link>
-
-        <Link href="/shippings" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath === "/shippings/"}>
-            배송
+            상품등록
           </MenuButton>
         </Link>
         <Link href="/users" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath === "/users/"}>유저</MenuButton>
+          <MenuButton selected={router.asPath.includes("/users/")}>
+            회원정보
+          </MenuButton>
         </Link>
-        {!isLoading && (
+
+        <Link href="/payments" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath === "/payments/"}>
+            결제정보
+          </MenuButton>
+        </Link>
+
+        <Link href="/univ" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath === "/univ/"}>
+            대학등록
+          </MenuButton>
+        </Link>
+
+        {/* {!isLoading && (
           <MenuButton>
             <a
               href={`${user.storeUrl}`}
@@ -98,7 +107,16 @@ export default function Sidebar(): any {
               STORE
             </a>
           </MenuButton>
-        )}
+        )} */}
+        <MenuButton>
+          <a
+            href="https://raditech-campus.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            STORE
+          </a>
+        </MenuButton>
       </TopContainer>
 
       <BottomContainer>

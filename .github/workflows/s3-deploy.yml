@@ -33,4 +33,4 @@ jobs:
           AWS_DEFAULT_REGION: ap-northeast-2
 
         run: |
-          aws s3 sync ./out s3://fjvn-demo-admin
+          aws s3 sync ./out s3://radi-tech-admin

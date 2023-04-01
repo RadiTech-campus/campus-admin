@@ -15,19 +15,20 @@ import {
 
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { fuzzyFilter } from "../../components/tanstackTable/filter/fuzzyFilter";
 import { GetUser } from "../../api/user_api";
-import { useGetShippingsByCompany } from "../../query/shippings";
-import { shippingsByCompanyList } from "../../components/tanstackTable/columns/shippingsByCompanyList";
+import { useGetOrdersByCompany } from "../../query/order";
+import { ordersByCompanyList } from "../../components/tanstackTable/columns/ordersByCompanyList";
+import { useGetUserWithOrders } from "../../query/users";
+import ArrowUp from "../../components/icons/ArrowUp";
 import Search from "../../components/icons/Search";
 import ArrowDown from "../../components/icons/ArrowDown";
-import ArrowUp from "../../components/icons/ArrowUp";
-import ShippingItems from "./shippingitem";
 
 // 스타일 컴포넌트
-const OrderItemListComtainer = styled.div`
+const OrdersComtainer = styled.div`
   display: flex;
-  flex: 1;
   flex-direction: column;
 `;
 
@@ -59,22 +60,27 @@ const TableContainer = styled.div`
   margin: -50px 40px 10px;
   border-radius: 10px;
   background-color: #fbfeff;
+  display: flex;
+  flex-direction: column;
 `;
+
 const TopButtonContainer = styled.div`
   display: flex;
   border-bottom: 2px solid rgba(77, 130, 141, 0.2);
-  /* justify-content: space-between;
-  align-items: flex-start; */
 `;
 
 const TopButton = styled.div<any>`
   font-size: larger;
   font-weight: 700;
-  color: ${(props: any): any => (props.dd ? "#2a62ff" : "gray")};
+  color: ${(props: any): any => (props.selected ? "#2a62ff" : "gray")};
   padding: 5px 10px 15px;
   margin-bottom: -2px;
   border-bottom: 2px
-    ${(props: any): any => (props.dd ? "#2a62ff" : "transparent")} solid;
+    ${(props: any): any => (props.selected ? "#2a62ff" : "transparent")} solid;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
 
 const SearchContainerWrapper = styled.div`
@@ -158,8 +164,12 @@ const TableRow = styled.tr`
 const TableCell = styled.td<any>`
   padding: 5px 5px;
   border-bottom: 1px solid rgba(77, 130, 141, 0.2);
-  color: #1b3d7c;
-  font-weight: bold;
+  color: ${(props: any) =>
+    props.cell.column.id === "qty" ? "#30acc0" : "#1b3d7c"};
+  font-weight: ${(props: any) =>
+    props.cell.column.id === "qty" ? "bold" : "bold"};
+  font-size: ${(props: any) =>
+    props.cell.column.id === "qty" ? "18px" : "15px"};
 `;
 
 const NavButtonContainer = styled.div`
@@ -202,16 +212,6 @@ const NavInput = styled.input`
   }
 `;
 
-const ShippingDetail = styled.button`
-  border: none;
-  padding: 5px 10px;
-  font-size: 15px;
-  border-radius: 5px;
-  background-color: #152b7b;
-  color: #ffffff;
-  cursor: pointer;
-`;
-
 function DebouncedInput({
   value: initialValue,
   onChange,
@@ -248,23 +248,19 @@ function DebouncedInput({
   );
 }
 
-export default function Shippings() {
+export default function Orders() {
+  const router = useRouter();
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
   const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
-  const { data: shippingsData } = useGetShippingsByCompany(user?.companyId);
+  const { data: ordersData } = useGetOrdersByCompany(user?.companyId);
+  const { data: productData } = useGetUserWithOrders(user?.companyId);
 
-  const [shippingDetaile, setShippingDetaile] = useState(false);
-  const handlerShippingDetaile = () => {
-    setShippingDetaile(!shippingDetaile);
-  };
   // 데이터 초기화
-  const data = useMemo(() => shippingsData || [], [shippingsData]);
-  const columns = useMemo<ColumnDef<any, any>[]>(
-    () => shippingsByCompanyList,
-    [],
-  );
+  const data = useMemo(() => ordersData || [], [ordersData]);
+  const columns = useMemo<ColumnDef<any, any>[]>(() => ordersByCompanyList, []);
 
   // 테이블 훅
   const table = useReactTable({
@@ -293,9 +289,9 @@ export default function Shippings() {
     debugColumns: false,
   });
   return (
-    <OrderItemListComtainer>
+    <OrdersComtainer>
       <TopContainer>
-        <MenuName>배송현황</MenuName>
+        <MenuName>전체 배너</MenuName>
         {!isLoading && (
           <UserName>
             {user.companyName}-{user.userName}
@@ -303,15 +299,42 @@ export default function Shippings() {
         )}{" "}
       </TopContainer>
       <TableContainer>
+        <div>
+          1. <input type="text" placeholder="URL" />
+        </div>
+        <div>
+          2. <input type="text" placeholder="URL" />
+        </div>
+        <div>
+          3. <input type="text" placeholder="URL" />
+        </div>
+        <div>
+          4. <input type="text" placeholder="URL" />
+        </div>
+        <div>
+          5. <input type="text" placeholder="URL" />
+        </div>
         {/* <TopButtonContainer>
-          <TopButton dd>
-            전체 {table.getPrePaginationRowModel().rows.length}
+          <TopButton selected={router.asPath.includes("/orders/")}>
+            <Link href="/orders">
+              전체 {table.getPrePaginationRowModel().rows.length}
+            </Link>
           </TopButton>
-          <TopButton>ㅇ 2</TopButton>
-          <TopButton>PHOTOBOOK 0</TopButton>
+          <TopButton>
+            <Link href="/orders/ordersbyuser">
+              유저별 {productData && productData?.length}
+            </Link>
+          </TopButton>
+          <TopButton>
+            <Link href="/orders">
+              배송완료
+              {productData && productData?.length}
+            </Link>
+          </TopButton>
         </TopButtonContainer> */}
-        <SearchContainerWrapper>
+        {/* <SearchContainerWrapper>
           <DebouncedInput
+            justify-contenspace-betweent
             value={globalFilter ?? ""}
             onChange={(value: any) => setGlobalFilter(String(value))}
             placeholder="Search all columns..."
@@ -336,8 +359,9 @@ export default function Shippings() {
             </PerPage>
             개
           </TotalPerPageContainer>
-        </SearchContainerWrapper>
-        <Table>
+        </SearchContainerWrapper> */}
+
+        {/* <Table>
           <thead>
             {table.getHeaderGroups().map((headerGroup: any) => (
               <TableHeader key={headerGroup.id}>
@@ -389,15 +413,6 @@ export default function Shippings() {
                     </TableCell>
                   );
                 })}
-                <TableCell>
-                  <ShippingDetail
-                    type="button"
-                    onClick={handlerShippingDetaile}
-                  >
-                    배송상품내용
-                  </ShippingDetail>
-                </TableCell>
-                {shippingDetaile && <ShippingItems />}
               </TableRow>
             ))}
           </tbody>
@@ -445,8 +460,8 @@ export default function Shippings() {
           >
             {">>"}
           </NavButton>
-        </NavButtonContainer>
+        </NavButtonContainer> */}
       </TableContainer>
-    </OrderItemListComtainer>
+    </OrdersComtainer>
   );
 }
