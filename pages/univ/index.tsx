@@ -309,33 +309,33 @@ export default function AddProduct() {
             />
           </AddProductInputContainer>
           <AddProductInputContainer>
-            <AddProductInputText>배너 1</AddProductInputText>
+            <AddProductInputText>할인율</AddProductInputText>
             <AddProductInput
-              name="desc"
-              placeholder="엘범 설명"
+              type="number"
+              name="barcode"
+              placeholder="바코드"
               onChange={onChange}
-              value={desc}
+              value={barcode}
             />
           </AddProductInputContainer>
           <AddProductInputContainer>
-            <AddProductInputText>배너 2</AddProductInputText>
+            <AddProductInputText>할인기간</AddProductInputText>
             <AddProductInput
-              name="desc"
-              placeholder="엘범 설명"
+              type="date"
+              name="barcode"
+              placeholder="바코드"
               onChange={onChange}
-              value={desc}
+              value={barcode}
+            />{" "}
+            ~{" "}
+            <AddProductInput
+              type="date"
+              name="barcode"
+              placeholder="바코드"
+              onChange={onChange}
+              value={barcode}
             />
           </AddProductInputContainer>
-          <AddProductInputContainer>
-            <AddProductInputText>배너 3</AddProductInputText>
-            <AddProductInput
-              name="desc"
-              placeholder="엘범 설명"
-              onChange={onChange}
-              value={desc}
-            />
-          </AddProductInputContainer>
-
           <AddProductInputContainer>
             <AddProductInputText>결제 구분</AddProductInputText>
             <AddProductSelect
@@ -375,6 +375,33 @@ export default function AddProduct() {
                 );
               })}
             </AddProductSelect>
+          </AddProductInputContainer>
+          <AddProductInputContainer>
+            <AddProductInputText>배너 1</AddProductInputText>
+            <AddProductInput
+              name="desc"
+              placeholder="배너 주소"
+              onChange={onChange}
+              value={desc}
+            />
+          </AddProductInputContainer>
+          <AddProductInputContainer>
+            <AddProductInputText>배너 2</AddProductInputText>
+            <AddProductInput
+              name="desc"
+              placeholder="배너 주소"
+              onChange={onChange}
+              value={desc}
+            />
+          </AddProductInputContainer>
+          <AddProductInputContainer>
+            <AddProductInputText>배너 3</AddProductInputText>
+            <AddProductInput
+              name="desc"
+              placeholder="배너 주소"
+              onChange={onChange}
+              value={desc}
+            />
           </AddProductInputContainer>
         </form>
         <ProductButton

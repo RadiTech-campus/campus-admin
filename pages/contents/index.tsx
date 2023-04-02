@@ -358,16 +358,6 @@ export default function AddContent() {
               value={description}
             />
           </AddProductInputContainer>
-          <AddProductInputContainer>
-            <AddProductInputText>자료 링크</AddProductInputText>
-            <AddProductInput
-              type="text"
-              name="noteLink"
-              placeholder="자료 링크"
-              onChange={onChange}
-              value={noteLink}
-            />
-          </AddProductInputContainer>
         </form>
         <ProductButton
           type="submit"
