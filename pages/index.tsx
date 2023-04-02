@@ -24,9 +24,5 @@ const BodyContainer = styled.div`
 // }
 // }
 export default function IndexPage() {
-  return (
-    <BodyContainer>
-      <DashBoard />
-    </BodyContainer>
-  );
+  return <BodyContainer>{/* <DashBoard /> */}</BodyContainer>;
 }

@@ -64,11 +64,6 @@ export default function Sidebar(): any {
           </CompanyName>
         )}
 
-        <Link href="/banners" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath === "/banners/"}>
-            배너등록
-          </MenuButton>
-        </Link>
         <Link href="/contents" style={{ textDecoration: "none" }}>
           <MenuButton selected={router.asPath === "/contents/"}>
             컨텐츠등록

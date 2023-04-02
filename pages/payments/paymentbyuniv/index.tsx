@@ -17,14 +17,14 @@ import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { fuzzyFilter } from "../../components/tanstackTable/filter/fuzzyFilter";
-import { GetUser } from "../../api/user_api";
-import { useGetOrdersByCompany } from "../../query/order";
-import { ordersByCompanyList } from "../../components/tanstackTable/columns/ordersByCompanyList";
-import { useGetUserWithOrders } from "../../query/users";
-import ArrowUp from "../../components/icons/ArrowUp";
-import Search from "../../components/icons/Search";
-import ArrowDown from "../../components/icons/ArrowDown";
+import { fuzzyFilter } from "../../../components/tanstackTable/filter/fuzzyFilter";
+import { GetUser } from "../../../api/user_api";
+import { useGetOrdersByCompany } from "../../../query/order";
+import { useGetUserWithOrders } from "../../../query/users";
+import ArrowUp from "../../../components/icons/ArrowUp";
+import Search from "../../../components/icons/Search";
+import ArrowDown from "../../../components/icons/ArrowDown";
+import { ordersListColumns } from "../../../components/tanstackTable/columns/ordersList";
 
 // 스타일 컴포넌트
 const OrdersComtainer = styled.div`
@@ -60,8 +60,6 @@ const TableContainer = styled.div`
   margin: -50px 40px 10px;
   border-radius: 10px;
   background-color: #fbfeff;
-  display: flex;
-  flex-direction: column;
 `;
 
 const TopButtonContainer = styled.div`
@@ -170,6 +168,10 @@ const TableCell = styled.td<any>`
     props.cell.column.id === "qty" ? "bold" : "bold"};
   font-size: ${(props: any) =>
     props.cell.column.id === "qty" ? "18px" : "15px"};
+  a {
+    text-decoration: none;
+    color: #1b3d7c;
+  }
 `;
 
 const NavButtonContainer = styled.div`
@@ -257,10 +259,10 @@ export default function Orders() {
   const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
   const { data: ordersData } = useGetOrdersByCompany(user?.companyId);
   const { data: productData } = useGetUserWithOrders(user?.companyId);
-
+  console.log("productData", productData);
   // 데이터 초기화
-  const data = useMemo(() => ordersData || [], [ordersData]);
-  const columns = useMemo<ColumnDef<any, any>[]>(() => ordersByCompanyList, []);
+  const data = useMemo(() => productData || [], [productData]);
+  const columns = useMemo<ColumnDef<any, any>[]>(() => ordersListColumns, []);
 
   // 테이블 훅
   const table = useReactTable({
@@ -291,48 +293,33 @@ export default function Orders() {
   return (
     <OrdersComtainer>
       <TopContainer>
-        <MenuName>전체 배너</MenuName>
+        <MenuName>유저별 주문</MenuName>
         {!isLoading && (
           <UserName>
             {user.companyName}-{user.userName}
           </UserName>
-        )}{" "}
+        )}
       </TopContainer>
       <TableContainer>
-        <div>
-          1. <input type="text" placeholder="URL" />
-        </div>
-        <div>
-          2. <input type="text" placeholder="URL" />
-        </div>
-        <div>
-          3. <input type="text" placeholder="URL" />
-        </div>
-        <div>
-          4. <input type="text" placeholder="URL" />
-        </div>
-        <div>
-          5. <input type="text" placeholder="URL" />
-        </div>
-        {/* <TopButtonContainer>
-          <TopButton selected={router.asPath.includes("/orders/")}>
-            <Link href="/orders">
+        <TopButtonContainer>
+          <TopButton>
+            <Link href="/payments">
               전체 {table.getPrePaginationRowModel().rows.length}
             </Link>
           </TopButton>
-          <TopButton>
-            <Link href="/orders/ordersbyuser">
-              유저별 {productData && productData?.length}
+          <TopButton selected={router.asPath.includes("/paymentbyuniv/")}>
+            <Link href="/payments">
+              대학별 {productData && productData?.length}
             </Link>
           </TopButton>
-          <TopButton>
+          {/* <TopButton>
             <Link href="/orders">
               배송완료
               {productData && productData?.length}
             </Link>
-          </TopButton>
-        </TopButtonContainer> */}
-        {/* <SearchContainerWrapper>
+          </TopButton> */}
+        </TopButtonContainer>
+        <SearchContainerWrapper>
           <DebouncedInput
             justify-contenspace-betweent
             value={globalFilter ?? ""}
@@ -359,9 +346,9 @@ export default function Orders() {
             </PerPage>
             개
           </TotalPerPageContainer>
-        </SearchContainerWrapper> */}
+        </SearchContainerWrapper>
 
-        {/* <Table>
+        <Table>
           <thead>
             {table.getHeaderGroups().map((headerGroup: any) => (
               <TableHeader key={headerGroup.id}>
@@ -406,10 +393,12 @@ export default function Orders() {
                 {row.getVisibleCells().map((cell: any) => {
                   return (
                     <TableCell key={cell.id} cell={cell}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
+                      <Link href={`/orders/ordersbyuser/${row.original.id}`}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Link>
                     </TableCell>
                   );
                 })}
@@ -460,7 +449,7 @@ export default function Orders() {
           >
             {">>"}
           </NavButton>
-        </NavButtonContainer> */}
+        </NavButtonContainer>
       </TableContainer>
     </OrdersComtainer>
   );

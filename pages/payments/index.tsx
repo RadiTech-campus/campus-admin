@@ -298,14 +298,14 @@ export default function Orders() {
       </TopContainer>
       <TableContainer>
         <TopButtonContainer>
-          <TopButton selected={router.asPath.includes("/orders/")}>
-            <Link href="/orders">
+          <TopButton selected={router.asPath.includes("/payments/")}>
+            <Link href="/payments">
               전체 {table.getPrePaginationRowModel().rows.length}
             </Link>
           </TopButton>
           <TopButton>
-            <Link href="/orders/ordersbyuser">
-              유저별 {productData && productData?.length}
+            <Link href="/payments/paymentbyuniv">
+              대학별 {productData && productData?.length}
             </Link>
           </TopButton>
           {/* <TopButton>
