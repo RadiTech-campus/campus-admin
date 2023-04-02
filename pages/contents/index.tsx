@@ -1,11 +1,8 @@
 import styled from "@emotion/styled";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { GetUser } from "../../api/user_api";
-import { useCreateArtist, useGetArtists } from "../../query/artist";
-import { useCreateCategory, useGetCategory } from "../../query/category";
-import { useCreateEnt, useGetEnt } from "../../query/ent";
-import { useCreateProduct } from "../../query/product";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import AuthBox from "../../components/authbox";
 
 const AddProductContainer = styled.div``;
 const TopContainer = styled.div`
@@ -23,6 +20,24 @@ const TableContainer = styled.div`
   background-color: #fbfeff;
 `;
 
+const TopButtonContainer = styled.div`
+  display: flex;
+  border-bottom: 2px solid rgba(77, 130, 141, 0.2);
+`;
+
+const TopButton = styled.div<any>`
+  font-size: larger;
+  font-weight: 700;
+  color: ${(props: any): any => (props.selected ? "#2a62ff" : "gray")};
+  padding: 5px 10px 15px;
+  margin-bottom: -2px;
+  border-bottom: 2px
+    ${(props: any): any => (props.selected ? "#2a62ff" : "transparent")} solid;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+`;
 const MenuName = styled.div`
   color: #fbfeff;
   margin-left: 60px;
@@ -73,45 +88,35 @@ const ProductButton = styled.button`
   }
 `;
 
-export default function AddProduct() {
+export default function AddContent() {
+  const router = useRouter();
+
   const [inputs, setInputs] = useState({
+    firstCat: "",
+    secondCat: "",
+    paymentStatus: "",
     title: "",
-    barcode: "",
-    price: "",
-    desc: "",
-    purchase: "",
-    deadline: "",
-    release: "",
-    sku: "",
-    stock: "",
-    thumb: "",
-    weight: "",
-    artist: "",
-    category: "",
-    ent: "",
-    addArtist: "",
-    addCategory: "",
-    addEnt: "",
+    lectureChapter: "",
+    lectureTime: "",
+    teacher: "",
+    lectureNote: "",
+    timeTable: "",
+    description: "",
+    noteLink: "",
   });
 
   const {
+    firstCat,
+    secondCat,
+    paymentStatus,
     title,
-    barcode,
-    price,
-    desc,
-    purchase,
-    deadline,
-    release,
-    sku,
-    stock,
-    thumb,
-    weight,
-    artist,
-    category,
-    ent,
-    addArtist,
-    addCategory,
-    addEnt,
+    lectureChapter,
+    lectureTime,
+    teacher,
+    lectureNote,
+    timeTable,
+    description,
+    noteLink,
   } = inputs;
 
   const onChange = (e: any) => {
@@ -125,340 +130,243 @@ export default function AddProduct() {
   };
   const onReset = () => {
     setInputs({
+      firstCat: "",
+      secondCat: "",
+      paymentStatus: "",
       title: "",
-      barcode: "",
-      price: "",
-      desc: "",
-      purchase: "",
-      deadline: "",
-      release: "",
-      sku: "",
-      stock: "",
-      thumb: "",
-      weight: "",
-      artist: "",
-      category: "",
-      ent: "",
-      addArtist: "",
-      addCategory: "",
-      addEnt: "",
+      lectureChapter: "",
+      lectureTime: "",
+      teacher: "",
+      lectureNote: "",
+      timeTable: "",
+      description: "",
+      noteLink: "",
     });
   };
-  const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
-  const {
-    data: artistData,
-    isLoading: isArtistLoading,
-    isSuccess: isArtistSuccess,
-  } = useGetArtists(user?.companyId);
-  const {
-    data: categoryData,
-    isLoading: isCategoryLoading,
-    isSuccess: isCategorySuccess,
-  } = useGetCategory(user?.companyId);
-  const {
-    data: entData,
-    isLoading: isEntLoading,
-    isSuccess: isEntSuccess,
-  } = useGetEnt(user?.companyId);
+  // const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
 
-  const productMutate = useCreateProduct(user?.companyId, inputs);
-  const artistMutate = useCreateArtist(user?.companyId, {
-    artistName: addArtist,
-    companyId: user?.companyId,
-  });
-  const categoryMutate = useCreateCategory(user?.companyId, {
-    categoryName: addCategory,
-    companyId: user?.companyId,
-  });
-  const entMutate = useCreateEnt(user?.companyId, {
-    entName: addEnt,
-    companyId: user?.companyId,
-  });
-
-  const handleAddOnSubmit = (e: any) => {
-    e.preventDefault();
-    const con = window.confirm("추가 하시겠습니까?");
-    if (con) {
-      if (e.target.name === "addArtist") {
-        if (addArtist.length < 1) {
-          alert("추가할 가수의 이름을 작성해 주세요.");
-        } else {
-          artistMutate.mutateAsync();
-          onReset();
-        }
-      } else if (e.target.name === "addCategory") {
-        if (addCategory.length < 1) {
-          alert("추가할 카테고리 이름을 작성해 주세요.");
-        } else {
-          categoryMutate.mutateAsync();
-          onReset();
-        }
-      } else if (e.target.name === "addEnt") {
-        if (addEnt.length < 1) {
-          alert("추가할 소속사 이름을 작성해 주세요.");
-        } else {
-          entMutate.mutateAsync();
-          onReset();
-        }
-      }
-    }
-  };
   const handleOnSubmit = (e: any) => {
     e.preventDefault();
-    const con = window.confirm("추가 하시겠습니까?");
+    const con = window.confirm("컨텐츠를 등록 하시겠습니까?");
     if (con) {
       if (
+        firstCat.length < 1 ||
+        secondCat.length < 1 ||
+        paymentStatus.length < 1 ||
         title.length < 1 ||
-        barcode.length < 1 ||
-        desc.length < 1 ||
-        deadline.length < 1 ||
-        release.length < 1 ||
-        sku.length < 1 ||
-        thumb.length < 1 ||
-        stock.length < 1 ||
-        price.length < 1 ||
-        purchase.length < 1 ||
-        weight.length < 1 ||
-        artist.length < 1 ||
-        category.length < 1 ||
-        ent.length < 1
+        lectureChapter.length < 1 ||
+        lectureTime.length < 1 ||
+        teacher.length < 1 ||
+        lectureNote.length < 1 ||
+        timeTable.length < 1 ||
+        description.length < 1 ||
+        noteLink.length < 1
       ) {
         alert("빈칸이 없어야함");
       } else {
-        productMutate.mutateAsync();
+        alert("등록 완료");
       }
     }
   };
-
-  useEffect(() => {
-    if (productMutate.data) {
-      if (productMutate.data.errorMessage) {
-        alert(productMutate.data.errorMessage);
-      } else {
-        // alert(`${productMutate.data} 개의 상품이 저장되었습니다`);
-      }
-    }
-    if (productMutate.status === "success") {
-      if (productMutate.data.title) {
-        alert(`${productMutate.data.title}가 등록되었습니다`);
-        onReset();
-      }
-    }
-  }, [productMutate.data]);
-  console.log("input", inputs);
-  console.log("productMutate.isError", productMutate.isError);
-  console.log("productMutate.isLoading", productMutate.isLoading);
-  console.log("productMutate.data", productMutate.data);
-  console.log("productMutate.status", productMutate.status);
 
   return (
     <AddProductContainer>
       <TopContainer>
         <MenuName>컨텐츠 등록</MenuName>
+        <AuthBox />
       </TopContainer>
       <TableContainer>
+        <TopButtonContainer>
+          <TopButton selected={router.asPath.includes("/contents/")}>
+            <Link href="/contents">등록</Link>
+          </TopButton>
+          <TopButton>
+            <Link href="/contents/contentlist">리스트</Link>
+          </TopButton>
+        </TopButtonContainer>
         <form>
           <AddProductInputContainer>
-            <AddProductInputText>강연이름</AddProductInputText>
+            <AddProductInputText>대분류</AddProductInputText>
+            <AddProductSelect
+              name="firstCat"
+              onChange={onChange}
+              value={firstCat}
+            >
+              <AddProductOption value="">필수선택</AddProductOption>
+              {[
+                { firstcat: "일반강의", id: "asdasd" },
+                { firstcat: "특별강의", id: "asdasasdd" },
+                { firstcat: "일반강의", id: "asdasdf" },
+              ].map((firstcat: any) => {
+                return (
+                  <AddProductOption key={firstcat.id} value={firstcat.firstcat}>
+                    {firstcat.firstcat}
+                  </AddProductOption>
+                );
+              })}
+            </AddProductSelect>
+          </AddProductInputContainer>
+          <AddProductInputContainer>
+            <AddProductInputText>중분류</AddProductInputText>
+            <AddProductSelect
+              name="secondCat"
+              onChange={onChange}
+              value={secondCat}
+            >
+              <AddProductOption value="">필수선택</AddProductOption>
+              {[
+                { secondCat: "일촬", id: "asdasdbnd" },
+                { secondCat: "특촬", id: "asdasasdd" },
+                { secondCat: "일촬", id: "asdasdgjk" },
+              ].map((secondcat: any) => {
+                return (
+                  <AddProductOption
+                    key={secondcat.id}
+                    value={secondcat.secondCat}
+                  >
+                    {secondcat.secondCat}
+                  </AddProductOption>
+                );
+              })}
+            </AddProductSelect>
+          </AddProductInputContainer>
+          <AddProductInputContainer>
+            <AddProductInputText>결제 구분</AddProductInputText>
+            <AddProductSelect
+              name="paymentStatus"
+              onChange={onChange}
+              value={paymentStatus}
+            >
+              <AddProductOption value="">필수선택</AddProductOption>
+              {[
+                { paymentStatus: "유료", id: "asdasasdd" },
+                { paymentStatus: "무료", id: "asdasd" },
+              ].map((status: any) => {
+                return (
+                  <AddProductOption
+                    key={status.id}
+                    value={status.paymentStatus}
+                  >
+                    {status.paymentStatus}
+                  </AddProductOption>
+                );
+              })}
+            </AddProductSelect>
+          </AddProductInputContainer>
+          <AddProductInputContainer>
+            <AddProductInputText>강연명 상세</AddProductInputText>
             <AddProductInput
+              type="text"
               name="title"
-              placeholder="엘범 제목"
+              placeholder="강연명 상세"
               onChange={onChange}
               value={title}
             />
           </AddProductInputContainer>
           <AddProductInputContainer>
-            <AddProductInputText>바코드</AddProductInputText>
-            <AddProductInput
-              name="barcode"
-              placeholder="바코드"
-              onChange={onChange}
-              value={barcode}
-            />
-          </AddProductInputContainer>
-          <AddProductInputContainer>
-            <AddProductInputText>설명</AddProductInputText>
-            <AddProductInput
-              name="desc"
-              placeholder="엘범 설명"
-              onChange={onChange}
-              value={desc}
-            />
-          </AddProductInputContainer>
-          <AddProductInputContainer>
-            <AddProductInputText>판매 가격</AddProductInputText>
+            <AddProductInputText>강의 분량</AddProductInputText>
             <AddProductInput
               type="number"
-              name="price"
-              placeholder="판매 가격"
+              name="lectureChapter"
+              placeholder="강의 분량"
               onChange={onChange}
-              value={price}
+              value={lectureChapter}
             />
           </AddProductInputContainer>
           <AddProductInputContainer>
-            <AddProductInputText>매입 가격</AddProductInputText>
+            <AddProductInputText>강의 시간</AddProductInputText>
             <AddProductInput
               type="number"
-              name="purchase"
-              placeholder="매입가"
+              name="lectureTime"
+              placeholder="강의 시간"
               onChange={onChange}
-              value={purchase}
+              value={lectureTime}
             />
           </AddProductInputContainer>
           <AddProductInputContainer>
-            <AddProductInputText>주문마감일</AddProductInputText>
-            <AddProductInput
-              type="datetime-local"
-              name="deadline"
-              placeholder="주문마감일"
+            <AddProductInputText>강사</AddProductInputText>
+            <AddProductSelect
+              name="teacher"
               onChange={onChange}
-              value={deadline}
-            />
-          </AddProductInputContainer>
-          <AddProductInputContainer>
-            <AddProductInputText>출시일</AddProductInputText>
-            <AddProductInput
-              type="datetime-local"
-              name="release"
-              placeholder="출시일"
-              onChange={onChange}
-              value={release}
-            />
-          </AddProductInputContainer>
-          <AddProductInputContainer>
-            <AddProductInputText>SKU</AddProductInputText>
-            <AddProductInput
-              name="sku"
-              placeholder="SKU"
-              onChange={onChange}
-              value={sku}
-            />
-          </AddProductInputContainer>
-          <AddProductInputContainer>
-            <AddProductInputText>재고</AddProductInputText>
-            <AddProductInput
-              type="number"
-              name="stock"
-              placeholder="재고"
-              onChange={onChange}
-              value={stock}
-            />
-          </AddProductInputContainer>
-          <AddProductInputContainer>
-            <AddProductInputText>무제한 재고</AddProductInputText>
-            <AddProductInput type="checkbox" />
-          </AddProductInputContainer>
-          <AddProductInputContainer>
-            <AddProductInputText>썸네일 주소</AddProductInputText>
-            <AddProductInput
-              name="thumb"
-              placeholder="썸네일 주소"
-              onChange={onChange}
-              value={thumb}
-            />
-          </AddProductInputContainer>
-          <AddProductInputContainer>
-            <AddProductInputText>무게</AddProductInputText>
-            <AddProductInput
-              type="number"
-              name="weight"
-              placeholder="무게"
-              onChange={onChange}
-              value={weight}
-            />
-          </AddProductInputContainer>
-          {/* TODO api get 요청 만든 후 작업 */}
-          <AddProductInputContainer>
-            <AddProductInputText>가수</AddProductInputText>
-            <AddProductSelect name="artist" onChange={onChange} value={artist}>
-              <AddProductOption value="">필수선택</AddProductOption>
-              {!isArtistLoading &&
-                isArtistSuccess &&
-                artistData?.map((artistLi: any) => {
-                  return (
-                    <AddProductOption key={artistLi.id} value={artistLi.id}>
-                      {artistLi.artistName}
-                    </AddProductOption>
-                  );
-                })}
-            </AddProductSelect>
-            <AddProductInput
-              placeholder="가수 추가"
-              style={{ marginLeft: "50px" }}
-              name="addArtist"
-              onChange={onChange}
-              value={addArtist}
-            />
-            <AddButton
-              name="addArtist"
-              type="button"
-              onClick={(e) => handleAddOnSubmit(e)}
+              value={teacher}
             >
-              추가하기
-            </AddButton>
+              <AddProductOption value="">필수선택</AddProductOption>
+              {[
+                { teacherName: "심지나", id: "asdasasdd" },
+                { teacherName: "심지나", id: "asdasd" },
+              ].map((teacherLi: any) => {
+                return (
+                  <AddProductOption
+                    key={teacherLi.id}
+                    value={teacherLi.teacherName}
+                  >
+                    {teacherLi.teacherName}
+                  </AddProductOption>
+                );
+              })}
+            </AddProductSelect>
+          </AddProductInputContainer>
+          <AddProductInputContainer>
+            <AddProductInputText>강연 자료</AddProductInputText>
+            <AddProductInput
+              type="text"
+              name="lectureNote"
+              placeholder="강연자료"
+              onChange={onChange}
+              value={lectureNote}
+            />
+          </AddProductInputContainer>
+          <AddProductInputContainer>
+            <AddProductInputText>강연 링크</AddProductInputText>
+            {/* TODO */}
+            <AddProductInput type="text" />
           </AddProductInputContainer>
 
           <AddProductInputContainer>
-            <AddProductInputText>카테고리</AddProductInputText>
-            <AddProductSelect
-              name="category"
-              onChange={onChange}
-              value={category}
-            >
-              <AddProductOption value="">필수선택</AddProductOption>
-              {!isCategoryLoading &&
-                isCategorySuccess &&
-                categoryData?.map((categoryLi: any) => {
-                  return (
-                    <AddProductOption key={categoryLi.id} value={categoryLi.id}>
-                      {categoryLi.categoryName}
-                    </AddProductOption>
-                  );
-                })}
-            </AddProductSelect>
-            <AddProductInput
-              placeholder="카테고리 추가"
-              style={{ marginLeft: "50px" }}
-              name="addCategory"
-              onChange={onChange}
-              value={addCategory}
-            />
             <AddButton
               name="addCategory"
               type="button"
-              onClick={(e) => handleAddOnSubmit(e)}
+              // onClick={(e) => handleAddOnSubmit(e)}
             >
-              추가하기
+              추가
+            </AddButton>
+            <AddButton
+              name="addCategory"
+              type="button"
+              // onClick={(e) => handleAddOnSubmit(e)}
+            >
+              삭제
             </AddButton>
           </AddProductInputContainer>
           <AddProductInputContainer>
-            <AddProductInputText>엔터</AddProductInputText>
-            <AddProductSelect name="ent" onChange={onChange} value={ent}>
-              <AddProductOption value="">필수선택</AddProductOption>
-              {!isEntLoading &&
-                isEntSuccess &&
-                entData?.map((entLi: any) => {
-                  return (
-                    <AddProductOption key={entLi.id} value={entLi.id}>
-                      {entLi.entName}
-                    </AddProductOption>
-                  );
-                })}
-            </AddProductSelect>
+            <AddProductInputText>Time Table</AddProductInputText>
             <AddProductInput
-              placeholder="소속사 추가"
-              style={{ marginLeft: "50px" }}
-              name="addEnt"
+              type="text"
+              name="timeTable"
+              placeholder="Time Table"
               onChange={onChange}
-              value={addEnt}
+              value={timeTable}
             />
-            <AddButton
-              name="addEnt"
-              type="button"
-              onClick={(e) => handleAddOnSubmit(e)}
-            >
-              추가하기
-            </AddButton>
+          </AddProductInputContainer>
+          <AddProductInputContainer>
+            <AddProductInputText>상세</AddProductInputText>
+            <AddProductInput
+              type="text"
+              name="description"
+              placeholder="상세"
+              onChange={onChange}
+              value={description}
+            />
+          </AddProductInputContainer>
+          <AddProductInputContainer>
+            <AddProductInputText>자료 링크</AddProductInputText>
+            <AddProductInput
+              type="text"
+              name="noteLink"
+              placeholder="자료 링크"
+              onChange={onChange}
+              value={noteLink}
+            />
           </AddProductInputContainer>
         </form>
         <ProductButton

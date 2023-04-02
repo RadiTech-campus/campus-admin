@@ -275,10 +275,28 @@ export default function Products() {
   const [globalFilter, setGlobalFilter] = useState("");
 
   const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
-  const { data: productData } = useGetProducts(user?.companyId);
+
+  const productData = [
+    {
+      productCode: "C_B01_01",
+      secondCat: "일촬",
+      period: "1개월",
+      title: "초음파: 영상 확인 부터 파악하기",
+      price: 30000,
+      id: "gfj",
+    },
+    {
+      productCode: "C_B01_03",
+      secondCat: "일촬",
+      period: "3개월",
+      title: "초음파: 영상 확인 부터 파악하기",
+      price: 60000,
+      id: "gfggj",
+    },
+  ];
 
   // 데이터 초기화
-  const data = useMemo(() => productData || [], [productData]);
+  const data = useMemo(() => productData, []);
   const columns = useMemo<ColumnDef<any, any>[]>(() => productsList, []);
 
   // 테이블 훅
@@ -308,97 +326,18 @@ export default function Products() {
     debugColumns: false,
   });
 
-  // 파일 업로드
-  const [file, setFile] = useState(null);
-  const [arr, setArr] = useState([]);
-  const ref = useRef<any>();
-
-  const reset = () => {
-    ref.current.value = "";
-    setFile(null);
-    setArr([]);
-  };
-
-  const handleOnChange = (e: any) => {
-    setFile(e.target.files[0]);
-  };
-  const csvFileToArray = (string: any) => {
-    let csvHeader = string.slice(0, string.indexOf("\n")).split(",");
-    csvHeader = csvHeader.map((header: any) => header.trim());
-    const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
-
-    const array1 = csvRows.map((i: any, index1: any) => {
-      const values = i.split(",");
-      const obj = csvHeader.reduce(
-        (object: any, header: any, index: any, arr1: any) => {
-          if (values[index].length < 1 || values[index].includes('"')) {
-            alert(
-              `${index1 + 1} 번째 행의 ${
-                index + 1
-              }번째 칸이 비어있거나 콤마, 따옴표를 포함하고 있습니다. \r수정, 삭제 후 다시 업로드해주세요.`,
-            );
-            arr1.slice(1);
-            reset();
-            return arr1;
-          }
-          object[header] = values[index];
-          return object;
-        },
-        {},
-      );
-      return obj;
-    });
-    setArr(array1);
-  };
-
-  useEffect(() => {
-    const fileReader = new FileReader();
-    if (file) {
-      fileReader.onload = (event: any) => {
-        const csvOutput = event.target.result;
-        csvFileToArray(csvOutput);
-      };
-      fileReader.readAsText(file);
-    }
-  }, [file]);
-  const mutate = useCreateProducts(user?.companyId, arr);
-  console.log("arr", arr);
-  const handleOnSubmit = (e: any) => {
-    e.preventDefault();
-    const con = window.confirm("추가 하시겠습니까?");
-    if (con) {
-      mutate.mutateAsync();
-    }
-  };
-
-  useEffect(() => {
-    if (mutate.data) {
-      if (mutate.data.errorMessage) {
-        alert(mutate.data.errorMessage);
-      } else {
-        alert(`${mutate.data} 개의 상품이 저장되었습니다`);
-        reset();
-      }
-    }
-  }, [mutate.data]);
-
-  console.log("mutate.isError", mutate.isError);
-  console.log("mutate.isLoading", mutate.isLoading);
-  console.log("mutate.data", mutate.data);
-  console.log("mutate.status", mutate.status);
-
   return (
     <ProductListContainer>
       <TopContainer>
         <MenuName>상품목록</MenuName>
-        {!isLoading && (
+        {/* {!isLoading && (
           <UserName>
             {user.companyName}-{user.userName}
           </UserName>
-        )}{" "}
+        )}{" "} */}
       </TopContainer>
       <TableContainer>
-        <TopButtonContainer>
+        {/* <TopButtonContainer>
           <TopButtonLeft>
             <Link href="/products/">
               <ProductButton type="button">상품목록</ProductButton>
@@ -406,11 +345,11 @@ export default function Products() {
             <Link href="/products/addproduct">
               <ProductButton type="button">상품등록</ProductButton>
             </Link>
-            {/* <ProductButton type="button">상품수정</ProductButton>
-            <ProductButton type="button">상품삭제</ProductButton> */}
+            <ProductButton type="button">상품수정</ProductButton>
+            <ProductButton type="button">상품삭제</ProductButton>
           </TopButtonLeft>
           <TopButtonRight>
-            {/* <form>
+            <form>
               <ProductButton
                 type="submit"
                 onClick={(e) => {
@@ -433,16 +372,16 @@ export default function Products() {
                 ref={ref}
                 onChange={handleOnChange}
               />
-            </form> */}
+            </form>
           </TopButtonRight>
 
-          {/* <TopButton dd>
+          <TopButton dd>
               전체 {table.getPrePaginationRowModel().rows.length}
             </TopButton>
             <TopButton dd>CD 2</TopButton>
             <TopButton>GOODS {productData && productData?.length}</TopButton>
-            <TopButton>PHOTOBOOK 0</TopButton> */}
-        </TopButtonContainer>
+            <TopButton>PHOTOBOOK 0</TopButton>
+        </TopButtonContainer> */}
         <SearchContainerWrapper>
           <DebouncedInput
             value={globalFilter ?? ""}

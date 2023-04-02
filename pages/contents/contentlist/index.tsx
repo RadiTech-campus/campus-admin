@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import styled from "@emotion/styled";
 import {
   useReactTable,
@@ -12,22 +13,23 @@ import {
   ColumnDef,
   flexRender,
 } from "@tanstack/react-table";
-
+import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fuzzyFilter } from "../../components/tanstackTable/filter/fuzzyFilter";
-import { GetUser } from "../../api/user_api";
-import Search from "../../components/icons/Search";
-import ArrowDown from "../../components/icons/ArrowDown";
-import ArrowUp from "../../components/icons/ArrowUp";
+import Link from "next/link";
+import { fuzzyFilter } from "../../../components/tanstackTable/filter/fuzzyFilter";
+import { GetUser } from "../../../api/user_api";
+import Search from "../../../components/icons/Search";
+import ArrowDown from "../../../components/icons/ArrowDown";
+import ArrowUp from "../../../components/icons/ArrowUp";
 import {
-  usersColumn,
-  usersData,
-} from "../../components/tanstackTable/columns/users";
-import AuthBox from "../../components/authbox";
+  contentData,
+  contentlist,
+} from "../../../components/tanstackTable/columns/contentlist";
+import AuthBox from "../../../components/authbox";
 
 // 스타일 컴포넌트
-const OrderItemListComtainer = styled.div`
+const ProductListContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -49,6 +51,13 @@ const MenuName = styled.div`
   font-weight: bold;
 `;
 
+const UserName = styled.div`
+  color: #fbfeff;
+  font-weight: bold;
+  margin-right: 60px;
+  font-size: larger;
+`;
+
 const TableContainer = styled.div`
   padding: 15px 20px;
   margin: -50px 40px 10px;
@@ -59,18 +68,20 @@ const TableContainer = styled.div`
 const TopButtonContainer = styled.div`
   display: flex;
   border-bottom: 2px solid rgba(77, 130, 141, 0.2);
-  /* justify-content: space-between;
-  align-items: flex-start; */
 `;
 
 const TopButton = styled.div<any>`
   font-size: larger;
   font-weight: 700;
-  color: ${(props: any): any => (props.dd ? "#2a62ff" : "gray")};
+  color: ${(props: any): any => (props.selected ? "#2a62ff" : "gray")};
   padding: 5px 10px 15px;
   margin-bottom: -2px;
   border-bottom: 2px
-    ${(props: any): any => (props.dd ? "#2a62ff" : "transparent")} solid;
+    ${(props: any): any => (props.selected ? "#2a62ff" : "transparent")} solid;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
 
 const SearchContainerWrapper = styled.div`
@@ -97,8 +108,9 @@ const SearchInput = styled.input`
   background-color: transparent;
   border: none;
   outline: none;
-  caret-color: black;
-  color: black;
+  /* caret-color: white; */
+  padding-left: 10px;
+  /* color: white; */
   ::placeholder {
     color: rgb(161, 161, 161);
   }
@@ -237,15 +249,19 @@ function DebouncedInput({
     </SearchContainer>
   );
 }
-export default function Users() {
+
+export default function ContentList() {
+  const router = useRouter();
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
   const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
 
   // 데이터 초기화
-  const data = useMemo(() => usersData || [], []);
-  const columns = useMemo<ColumnDef<any, any>[]>(() => usersColumn, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const data = useMemo(() => contentData, []);
+  const columns = useMemo<ColumnDef<any, any>[]>(() => contentlist, []);
 
   // 테이블 훅
   const table = useReactTable({
@@ -273,18 +289,24 @@ export default function Users() {
     debugHeaders: true,
     debugColumns: false,
   });
+
   return (
-    <OrderItemListComtainer>
+    <ProductListContainer>
       <TopContainer>
-        <MenuName>회원정보</MenuName>
+        <MenuName>컨텐츠 리스트</MenuName>
         <AuthBox />
-        {/* <UserName>
-          <div>홈</div>
-          <div>뒤로가기</div>
-          <div>로그아웃</div>
-        </UserName> */}
       </TopContainer>
       <TableContainer>
+        <TopButtonContainer>
+          <TopButton>
+            <Link href="/contents">등록</Link>
+          </TopButton>
+          <TopButton
+            selected={router.asPath.includes("/contents/contentlist/")}
+          >
+            <Link href="/contents/contentlist">리스트</Link>
+          </TopButton>
+        </TopButtonContainer>
         <SearchContainerWrapper>
           <DebouncedInput
             value={globalFilter ?? ""}
@@ -410,6 +432,6 @@ export default function Users() {
           </NavButton>
         </NavButtonContainer>
       </TableContainer>
-    </OrderItemListComtainer>
+    </ProductListContainer>
   );
 }

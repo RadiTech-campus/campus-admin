@@ -25,6 +25,11 @@ import { useGetUserWithOrders } from "../../query/users";
 import ArrowUp from "../../components/icons/ArrowUp";
 import Search from "../../components/icons/Search";
 import ArrowDown from "../../components/icons/ArrowDown";
+import {
+  paymentsColumn,
+  paymentsData,
+} from "../../components/tanstackTable/columns/payments";
+import AuthBox from "../../components/authbox";
 
 // 스타일 컴포넌트
 const OrdersComtainer = styled.div`
@@ -257,8 +262,8 @@ export default function Orders() {
   const { data: productData } = useGetUserWithOrders(user?.companyId);
 
   // 데이터 초기화
-  const data = useMemo(() => ordersData || [], [ordersData]);
-  const columns = useMemo<ColumnDef<any, any>[]>(() => ordersByCompanyList, []);
+  const data = useMemo(() => paymentsData || [], []);
+  const columns = useMemo<ColumnDef<any, any>[]>(() => paymentsColumn, []);
 
   // 테이블 훅
   const table = useReactTable({
@@ -289,12 +294,8 @@ export default function Orders() {
   return (
     <OrdersComtainer>
       <TopContainer>
-        <MenuName>전체 주문목록</MenuName>
-        {!isLoading && (
-          <UserName>
-            {user.companyName}-{user.userName}
-          </UserName>
-        )}{" "}
+        <MenuName>결제정보</MenuName>
+        <AuthBox />
       </TopContainer>
       <TableContainer>
         <TopButtonContainer>
@@ -303,11 +304,11 @@ export default function Orders() {
               전체 {table.getPrePaginationRowModel().rows.length}
             </Link>
           </TopButton>
-          <TopButton>
+          {/* <TopButton>
             <Link href="/payments/paymentbyuniv">
               대학별 {productData && productData?.length}
             </Link>
-          </TopButton>
+          </TopButton> */}
           {/* <TopButton>
             <Link href="/orders">
               배송완료

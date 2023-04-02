@@ -60,18 +60,18 @@ export default function Sidebar(): any {
       <TopContainer>
         {!isLoading && (
           <CompanyName>
-            <Link href="/">{user.companyName}</Link>
+            <Link href="/">Radi-Tech Admin</Link>
           </CompanyName>
         )}
 
         <Link href="/contents" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath === "/contents/"}>
+          <MenuButton selected={router.asPath.includes("/contents/")}>
             컨텐츠등록
           </MenuButton>
         </Link>
         <Link href="/products" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath === "/products/"}>
-            상품등록
+          <MenuButton selected={router.asPath.includes("/products/")}>
+            상품목록
           </MenuButton>
         </Link>
         <Link href="/users" style={{ textDecoration: "none" }}>
@@ -81,13 +81,13 @@ export default function Sidebar(): any {
         </Link>
 
         <Link href="/payments" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath === "/payments/"}>
+          <MenuButton selected={router.asPath.includes("/payments/")}>
             결제정보
           </MenuButton>
         </Link>
 
         <Link href="/univ" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath === "/univ/"}>
+          <MenuButton selected={router.asPath.includes("/univ/")}>
             대학등록
           </MenuButton>
         </Link>
@@ -109,13 +109,13 @@ export default function Sidebar(): any {
             target="_blank"
             rel="noopener noreferrer"
           >
-            STORE
+            CAMPUS
           </a>
         </MenuButton>
       </TopContainer>
 
       <BottomContainer>
-        <MenuButton style={{ fontSize: "14px" }}>로그아웃</MenuButton>
+        {/* <MenuButton style={{ fontSize: "14px" }}>로그아웃</MenuButton> */}
       </BottomContainer>
     </SidebarContainer>
   );
