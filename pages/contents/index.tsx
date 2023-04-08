@@ -177,11 +177,11 @@ export default function AddContent() {
       </TopContainer>
       <TableContainer>
         <TopButtonContainer>
-          <TopButton selected={router.asPath.includes("/contents/")}>
-            <Link href="/contents">등록</Link>
-          </TopButton>
           <TopButton>
             <Link href="/contents/contentlist">리스트</Link>
+          </TopButton>
+          <TopButton selected={router.asPath.includes("/contents/")}>
+            <Link href="/contents">등록</Link>
           </TopButton>
         </TopButtonContainer>
         <form>

@@ -298,13 +298,13 @@ export default function ContentList() {
       </TopContainer>
       <TableContainer>
         <TopButtonContainer>
-          <TopButton>
-            <Link href="/contents">등록</Link>
-          </TopButton>
           <TopButton
             selected={router.asPath.includes("/contents/contentlist/")}
           >
             <Link href="/contents/contentlist">리스트</Link>
+          </TopButton>
+          <TopButton>
+            <Link href="/contents">등록</Link>
           </TopButton>
         </TopButtonContainer>
         <SearchContainerWrapper>
