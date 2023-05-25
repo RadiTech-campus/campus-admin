@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { GetUser } from "../../api/user_api";
-import { useCreateArtist, useGetArtists } from "../../query/artist";
-import { useCreateCategory, useGetCategory } from "../../query/category";
+// import { useCreateArtist, useGetArtists } from "../../query/artist";
+// import { useCreateCategory, useGetCategory } from "../../query/category";
 import { useCreateEnt, useGetEnt } from "../../query/ent";
 import { useCreateProduct } from "../../query/product";
 import AuthBox from "../../components/authbox";
@@ -167,112 +167,112 @@ export default function AddProduct() {
       addEnt: "",
     });
   };
-  const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
-  const {
-    data: artistData,
-    isLoading: isArtistLoading,
-    isSuccess: isArtistSuccess,
-  } = useGetArtists(user?.companyId);
-  const {
-    data: categoryData,
-    isLoading: isCategoryLoading,
-    isSuccess: isCategorySuccess,
-  } = useGetCategory(user?.companyId);
-  const {
-    data: entData,
-    isLoading: isEntLoading,
-    isSuccess: isEntSuccess,
-  } = useGetEnt(user?.companyId);
+  // const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
+  // const {
+  //   data: artistData,
+  //   isLoading: isArtistLoading,
+  //   isSuccess: isArtistSuccess,
+  // } = useGetArtists(user?.companyId);
+  // const {
+  //   data: categoryData,
+  //   isLoading: isCategoryLoading,
+  //   isSuccess: isCategorySuccess,
+  // } = useGetCategory(user?.companyId);
+  // const {
+  //   data: entData,
+  //   isLoading: isEntLoading,
+  //   isSuccess: isEntSuccess,
+  // } = useGetEnt(user?.companyId);
 
-  const productMutate = useCreateProduct(user?.companyId, inputs);
-  const artistMutate = useCreateArtist(user?.companyId, {
-    artistName: addArtist,
-    companyId: user?.companyId,
-  });
-  const categoryMutate = useCreateCategory(user?.companyId, {
-    categoryName: addCategory,
-    companyId: user?.companyId,
-  });
-  const entMutate = useCreateEnt(user?.companyId, {
-    entName: addEnt,
-    companyId: user?.companyId,
-  });
+  // const productMutate = useCreateProduct(user?.companyId, inputs);
+  // const artistMutate = useCreateArtist(user?.companyId, {
+  //   artistName: addArtist,
+  //   companyId: user?.companyId,
+  // });
+  // const categoryMutate = useCreateCategory(user?.companyId, {
+  //   categoryName: addCategory,
+  //   companyId: user?.companyId,
+  // });
+  // const entMutate = useCreateEnt(user?.companyId, {
+  //   entName: addEnt,
+  //   companyId: user?.companyId,
+  // });
 
-  const handleAddOnSubmit = (e: any) => {
-    e.preventDefault();
-    const con = window.confirm("추가 하시겠습니까?");
-    if (con) {
-      if (e.target.name === "addArtist") {
-        if (addArtist.length < 1) {
-          alert("추가할 가수의 이름을 작성해 주세요.");
-        } else {
-          artistMutate.mutateAsync();
-          onReset();
-        }
-      } else if (e.target.name === "addCategory") {
-        if (addCategory.length < 1) {
-          alert("추가할 카테고리 이름을 작성해 주세요.");
-        } else {
-          categoryMutate.mutateAsync();
-          onReset();
-        }
-      } else if (e.target.name === "addEnt") {
-        if (addEnt.length < 1) {
-          alert("추가할 소속사 이름을 작성해 주세요.");
-        } else {
-          entMutate.mutateAsync();
-          onReset();
-        }
-      }
-    }
-  };
-  const handleOnSubmit = (e: any) => {
-    e.preventDefault();
-    const con = window.confirm("추가 하시겠습니까?");
-    if (con) {
-      if (
-        title.length < 1 ||
-        barcode.length < 1 ||
-        desc.length < 1 ||
-        deadline.length < 1 ||
-        release.length < 1 ||
-        sku.length < 1 ||
-        thumb.length < 1 ||
-        stock.length < 1 ||
-        price.length < 1 ||
-        purchase.length < 1 ||
-        weight.length < 1 ||
-        artist.length < 1 ||
-        category.length < 1 ||
-        ent.length < 1
-      ) {
-        alert("빈칸이 없어야함");
-      } else {
-        productMutate.mutateAsync();
-      }
-    }
-  };
+  // const handleAddOnSubmit = (e: any) => {
+  //   e.preventDefault();
+  //   const con = window.confirm("추가 하시겠습니까?");
+  //   if (con) {
+  //     if (e.target.name === "addArtist") {
+  //       if (addArtist.length < 1) {
+  //         alert("추가할 가수의 이름을 작성해 주세요.");
+  //       } else {
+  //         artistMutate.mutateAsync();
+  //         onReset();
+  //       }
+  //     } else if (e.target.name === "addCategory") {
+  //       if (addCategory.length < 1) {
+  //         alert("추가할 카테고리 이름을 작성해 주세요.");
+  //       } else {
+  //         categoryMutate.mutateAsync();
+  //         onReset();
+  //       }
+  //     } else if (e.target.name === "addEnt") {
+  //       if (addEnt.length < 1) {
+  //         alert("추가할 소속사 이름을 작성해 주세요.");
+  //       } else {
+  //         entMutate.mutateAsync();
+  //         onReset();
+  //       }
+  //     }
+  //   }
+  // };
+  // const handleOnSubmit = (e: any) => {
+  //   e.preventDefault();
+  //   const con = window.confirm("추가 하시겠습니까?");
+  //   if (con) {
+  //     if (
+  //       title.length < 1 ||
+  //       barcode.length < 1 ||
+  //       desc.length < 1 ||
+  //       deadline.length < 1 ||
+  //       release.length < 1 ||
+  //       sku.length < 1 ||
+  //       thumb.length < 1 ||
+  //       stock.length < 1 ||
+  //       price.length < 1 ||
+  //       purchase.length < 1 ||
+  //       weight.length < 1 ||
+  //       artist.length < 1 ||
+  //       category.length < 1 ||
+  //       ent.length < 1
+  //     ) {
+  //       alert("빈칸이 없어야함");
+  //     } else {
+  //       productMutate.mutateAsync();
+  //     }
+  //   }
+  // };
 
-  useEffect(() => {
-    if (productMutate.data) {
-      if (productMutate.data.errorMessage) {
-        alert(productMutate.data.errorMessage);
-      } else {
-        // alert(`${productMutate.data} 개의 상품이 저장되었습니다`);
-      }
-    }
-    if (productMutate.status === "success") {
-      if (productMutate.data.title) {
-        alert(`${productMutate.data.title}가 등록되었습니다`);
-        onReset();
-      }
-    }
-  }, [productMutate.data]);
-  console.log("input", inputs);
-  console.log("productMutate.isError", productMutate.isError);
-  console.log("productMutate.isLoading", productMutate.isLoading);
-  console.log("productMutate.data", productMutate.data);
-  console.log("productMutate.status", productMutate.status);
+  // useEffect(() => {
+  //   if (productMutate.data) {
+  //     if (productMutate.data.errorMessage) {
+  //       alert(productMutate.data.errorMessage);
+  //     } else {
+  //       // alert(`${productMutate.data} 개의 상품이 저장되었습니다`);
+  //     }
+  //   }
+  //   if (productMutate.status === "success") {
+  //     if (productMutate.data.title) {
+  //       alert(`${productMutate.data.title}가 등록되었습니다`);
+  //       onReset();
+  //     }
+  //   }
+  // }, [productMutate.data]);
+  // console.log("input", inputs);
+  // console.log("productMutate.isError", productMutate.isError);
+  // console.log("productMutate.isLoading", productMutate.isLoading);
+  // console.log("productMutate.data", productMutate.data);
+  // console.log("productMutate.status", productMutate.status);
 
   return (
     <AddProductContainer>
@@ -407,7 +407,7 @@ export default function AddProduct() {
         <ProductButton
           type="submit"
           onClick={(e) => {
-            handleOnSubmit(e);
+            // handleOnSubmit(e);
           }}
         >
           등록하기

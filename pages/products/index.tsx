@@ -274,8 +274,6 @@ export default function Products() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
-
   const productData = [
     {
       productCode: "A_A01_01",

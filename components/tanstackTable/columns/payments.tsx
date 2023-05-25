@@ -3,16 +3,16 @@ import { fuzzySort } from "../sorter/fuzzySort";
 
 export const paymentsColumn: ColumnDef<any, any>[] = [
   {
-    accessorFn: (row) => row.createdAt,
-    id: "createdAt",
+    accessorFn: (row) => row.date,
+    id: "date",
     header: "주문일",
     cell: (info) => info.getValue()?.substr(0, 10),
     filterFn: "fuzzy",
     sortingFn: fuzzySort,
   },
   {
-    accessorFn: (row) => row.orderId,
-    id: "orderId",
+    accessorFn: (row) => row.id,
+    id: "id",
     header: "주문번호",
     cell: (info) => info.getValue(),
     filterFn: "fuzzy",
@@ -59,8 +59,8 @@ export const paymentsColumn: ColumnDef<any, any>[] = [
     sortingFn: fuzzySort,
   },
   {
-    accessorFn: (row) => row.orderStatus,
-    id: "orderStatus",
+    accessorFn: (row) => row.status,
+    id: "status",
     header: "주문상태",
     cell: (info) => info.getValue(),
     filterFn: "fuzzy",

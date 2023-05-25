@@ -9,7 +9,7 @@ import {
   CreateProduct,
   GetProducts,
 } from "../api/products_api";
-import { getContentDetail, getContents } from "../api/contents_api";
+import { getContentDetail, getContents, getPayments, getUnivs } from "../api/contents_api";
 
 export const useGetContents = () => {
   return useQuery({
@@ -29,6 +29,32 @@ export const useGetContentDetails = (contentCode) => {
     queryKey: [contentCode],
     queryFn: async () => {
       const data = await getContentDetail(contentCode)
+      return data;
+    },
+    onError: (e) => {
+      console.log("e", e);
+    },
+  });
+};
+
+export const useGetUnivs = () => {
+  return useQuery({
+    queryKey: ["univs"],
+    queryFn: async () => {
+      const data = await getUnivs()
+      return data;
+    },
+    onError: (e) => {
+      console.log("e", e);
+    },
+  });
+};
+
+export const useGetPayments = () => {
+  return useQuery({
+    queryKey: ["payments"],
+    queryFn: async () => {
+      const data = await getPayments()
       return data;
     },
     onError: (e) => {
