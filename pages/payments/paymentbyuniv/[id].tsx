@@ -18,13 +18,8 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { fuzzyFilter } from "../../../components/tanstackTable/filter/fuzzyFilter";
-import { GetUser } from "../../../api/user_api";
-import {
-  useGetOrdersByCompany,
-  useGetOrdersByCompanyUser,
-} from "../../../query/order";
+
 import { ordersByCompanyList } from "../../../components/tanstackTable/columns/ordersByCompanyList";
-import { useGetUserWithOrders } from "../../../query/users";
 import ArrowUp from "../../../components/icons/ArrowUp";
 import Search from "../../../components/icons/Search";
 import ArrowDown from "../../../components/icons/ArrowDown";
@@ -258,15 +253,8 @@ export default function Orders() {
   const [globalFilter, setGlobalFilter] = useState("");
   const [rowSelection, setRowSelection] = useState({});
 
-  const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
-  const { data: ordersData } = useGetOrdersByCompanyUser(
-    user?.companyId,
-    user?.id,
-  );
-  const { data: productData } = useGetUserWithOrders(user?.companyId);
-
   // 데이터 초기화
-  const data = useMemo(() => ordersData || [], [ordersData]);
+  const data = useMemo(() => [], []);
   const columns = useMemo<ColumnDef<any, any>[]>(() => ordersByUsers, []);
 
   // 테이블 훅
@@ -303,11 +291,7 @@ export default function Orders() {
     <OrdersComtainer>
       <TopContainer>
         {/* <MenuName>주문목록</MenuName> */}
-        {!isLoading && (
-          <MenuName>
-            {user.companyName}-{user.userName}
-          </MenuName>
-        )}{" "}
+        <MenuName>asd</MenuName>
       </TopContainer>
       <TableContainer>
         {/* <TopButtonContainer>

@@ -18,9 +18,6 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { fuzzyFilter } from "../../../components/tanstackTable/filter/fuzzyFilter";
-import { GetUser } from "../../../api/user_api";
-import { useGetOrdersByCompany } from "../../../query/order";
-import { useGetUserWithOrders } from "../../../query/users";
 import ArrowUp from "../../../components/icons/ArrowUp";
 import Search from "../../../components/icons/Search";
 import ArrowDown from "../../../components/icons/ArrowDown";
@@ -256,12 +253,8 @@ export default function Orders() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
-  const { data: ordersData } = useGetOrdersByCompany(user?.companyId);
-  const { data: productData } = useGetUserWithOrders(user?.companyId);
-  console.log("productData", productData);
   // 데이터 초기화
-  const data = useMemo(() => productData || [], [productData]);
+  const data = useMemo(() => [], []);
   const columns = useMemo<ColumnDef<any, any>[]>(() => ordersListColumns, []);
 
   // 테이블 훅
@@ -294,11 +287,11 @@ export default function Orders() {
     <OrdersComtainer>
       <TopContainer>
         <MenuName>유저별 주문</MenuName>
-        {!isLoading && (
+        {/* {!isLoading && (
           <UserName>
             {user.companyName}-{user.userName}
           </UserName>
-        )}
+        )} */}
       </TopContainer>
       <TableContainer>
         <TopButtonContainer>
@@ -309,7 +302,7 @@ export default function Orders() {
           </TopButton>
           <TopButton selected={router.asPath.includes("/paymentbyuniv/")}>
             <Link href="/payments">
-              대학별 {productData && productData?.length}
+              {/* 대학별 {productData && productData?.length} */}
             </Link>
           </TopButton>
           {/* <TopButton>
