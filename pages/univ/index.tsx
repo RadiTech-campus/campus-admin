@@ -3,11 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { GetUser } from "../../api/user_api";
 // import { useCreateArtist, useGetArtists } from "../../query/artist";
 // import { useCreateCategory, useGetCategory } from "../../query/category";
-import { useCreateEnt, useGetEnt } from "../../query/ent";
-import { useCreateProduct } from "../../query/product";
 import AuthBox from "../../components/authbox";
 
 const AddProductContainer = styled.div``;
