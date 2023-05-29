@@ -18,8 +18,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { fuzzyFilter } from "../../components/tanstackTable/filter/fuzzyFilter";
-import { useCreateProducts, useGetProducts } from "../../query/product";
-import { GetUser } from "../../api/user_api";
 import { productsList } from "../../components/tanstackTable/columns/productsList";
 import Search from "../../components/icons/Search";
 import ArrowDown from "../../components/icons/ArrowDown";
@@ -274,8 +272,6 @@ function DebouncedInput({
 export default function Products() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
-
-  const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
 
   // const productData = [
   //   {

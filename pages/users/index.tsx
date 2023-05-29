@@ -16,7 +16,6 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fuzzyFilter } from "../../components/tanstackTable/filter/fuzzyFilter";
-import { GetUser } from "../../api/user_api";
 import Search from "../../components/icons/Search";
 import ArrowDown from "../../components/icons/ArrowDown";
 import ArrowUp from "../../components/icons/ArrowUp";

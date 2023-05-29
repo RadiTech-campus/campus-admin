@@ -3,9 +3,9 @@ import { fuzzySort } from "../sorter/fuzzySort";
 
 export const productsList: ColumnDef<any, any>[] = [
   {
-    accessorFn: (row) => row.firstCat,
-    id: "firstCat",
-    header: "대분류",
+    accessorFn: (row) => row.productCode,
+    id: "productCode",
+    header: "상품코드",
     cell: (info) => info.getValue(),
     filterFn: "fuzzy",
     sortingFn: fuzzySort,

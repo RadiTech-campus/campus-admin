@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { GetUser } from "../../api/user_api";
 
 const SidebarContainer = styled.div`
   height: 100vh;
@@ -53,16 +52,13 @@ const MenuButton = styled.div<any>`
 
 export default function Sidebar(): any {
   const router = useRouter();
-  const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
 
   return (
     <SidebarContainer>
       <TopContainer>
-        {!isLoading && (
-          <CompanyName>
-            <Link href="/">Radi-Tech Admin</Link>
-          </CompanyName>
-        )}
+        <CompanyName>
+          <Link href="/">Radi-Tech Admin</Link>
+        </CompanyName>
 
         <Link href="/contents/contentlist" style={{ textDecoration: "none" }}>
           <MenuButton selected={router.asPath.includes("/contents/")}>

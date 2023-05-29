@@ -18,7 +18,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { fuzzyFilter } from "../../../components/tanstackTable/filter/fuzzyFilter";
-import { GetUser } from "../../../api/user_api";
 import Search from "../../../components/icons/Search";
 import ArrowDown from "../../../components/icons/ArrowDown";
 import ArrowUp from "../../../components/icons/ArrowUp";
@@ -266,7 +265,7 @@ export default function ContentList() {
 
   // 데이터 초기화
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const data = useMemo(() => contentsData?.Items || [], []);
+  const data = useMemo(() => contentsData?.Items || [], [contentsData]);
   const columns = useMemo<ColumnDef<any, any>[]>(() => contentlist, []);
   console.log("data", data);
 
