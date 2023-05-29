@@ -64,9 +64,9 @@ export default function Sidebar(): any {
           </CompanyName>
         )}
 
-        <Link href="/contents" style={{ textDecoration: "none" }}>
+        <Link href="/contents/contentlist" style={{ textDecoration: "none" }}>
           <MenuButton selected={router.asPath.includes("/contents/")}>
-            컨텐츠등록
+            컨텐츠
           </MenuButton>
         </Link>
         <Link href="/products" style={{ textDecoration: "none" }}>

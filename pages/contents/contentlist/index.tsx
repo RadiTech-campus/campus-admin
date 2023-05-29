@@ -28,6 +28,7 @@ import {
 } from "../../../components/tanstackTable/columns/contentlist";
 import AuthBox from "../../../components/authbox";
 import { useGetContents } from "../../../query/contents";
+import TableRowContainer from "./tablerowcontainer";
 
 // 스타일 컴포넌트
 const ProductListContainer = styled.div`
@@ -139,6 +140,7 @@ const PerPage = styled.select`
 
 const Table = styled.table`
   width: 100%;
+  border-collapse: collapse;
 `;
 
 const TableHeader = styled.tr`
@@ -158,22 +160,22 @@ const TableHeaderCell = styled.div`
   cursor: pointer;
 `;
 
-const TableRow = styled.tr`
+const TableRowC = styled.tr`
   border: 1px;
   background-color: transparent;
   text-align: center;
 `;
 
-const TableCell = styled.td<any>`
-  padding: 5px 5px;
-  border-bottom: 1px solid rgba(77, 130, 141, 0.2);
-  color: ${(props: any) =>
-    props.cell.column.id === "qty" ? "#30acc0" : "#1b3d7c"};
-  font-weight: ${(props: any) =>
-    props.cell.column.id === "qty" ? "bold" : "bold"};
-  font-size: ${(props: any) =>
-    props.cell.column.id === "qty" ? "18px" : "15px"};
-`;
+// const TableCell = styled.td<any>`
+//   padding: 5px 5px;
+//   border-top: 1px solid rgba(77, 130, 141, 0.2);
+//   color: ${(props: any) =>
+//     props.cell.column.id === "qty" ? "#30acc0" : "#1b3d7c"};
+//   font-weight: ${(props: any) =>
+//     props.cell.column.id === "qty" ? "bold" : "bold"};
+//   font-size: ${(props: any) =>
+//     props.cell.column.id === "qty" ? "18px" : "15px"};
+// `;
 
 const NavButtonContainer = styled.div`
   display: flex;
@@ -257,7 +259,8 @@ export default function ContentList() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
+  // const { data: contentData } = useGetContents();
+  // const data = useMemo(() => contentData?.Items || [], [contentData]);
 
   const { data: contentsData } = useGetContents();
 
@@ -302,14 +305,14 @@ export default function ContentList() {
       </TopContainer>
       <TableContainer>
         <TopButtonContainer>
-          <TopButton>
-            <Link href="/contents">등록</Link>
-          </TopButton>
           <TopButton
             selected={router.asPath.includes("/contents/contentlist/")}
           >
             <Link href="/contents/contentlist">리스트</Link>
           </TopButton>
+          {/* <TopButton>
+            <Link href="/contents">등록</Link>
+          </TopButton> */}
         </TopButtonContainer>
         <SearchContainerWrapper>
           <DebouncedInput
@@ -371,23 +374,13 @@ export default function ContentList() {
                     </TableHeaderCellWrapper>
                   );
                 })}
+                <TableHeaderCell />
               </TableHeader>
             ))}
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row: any) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell: any) => {
-                  return (
-                    <TableCell key={cell.id} cell={cell}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
+              <TableRowContainer key={row.id} row={row} />
             ))}
           </tbody>
         </Table>

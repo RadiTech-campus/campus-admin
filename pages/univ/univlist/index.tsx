@@ -258,42 +258,45 @@ export default function Products() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
-  const testData = [
-    {
-      id: "asdasd",
-      contentCode: "A_A01",
-      firstCat: "ALLPASS",
-      secondCat: "일촬",
-      title: "초음파: 영상 확인 부터 파악하기",
-      teacher: "심지나",
-      playtime: 3,
-    },
-    {
-      id: "asdasasdd",
-      contentCode: "C_B01",
-      firstCat: "일반강의",
-      secondCat: "일촬",
-      title: "초음파: 영상 확인 부터 파악하기",
-      teacher: "심지나",
-      playtime: 3,
-    },
-    {
-      id: "asdasasfgsddd",
-      contentCode: "C_C01",
-      firstCat: "취업",
-      secondCat: "일촬",
-      title: "초음파: 영상 확인 부터 파악하기",
-      teacher: "심지나",
-      playtime: 3,
-    },
-  ];
+  const { data: univData } = useGetUniv();
+  const data = useMemo(() => univData?.Items || [], [univData]);
+
+  // const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
+  // const testData = [
+  //   {
+  //     id: "asdasd",
+  //     contentCode: "A_A01",
+  //     firstCat: "ALLPASS",
+  //     secondCat: "일촬",
+  //     title: "초음파: 영상 확인 부터 파악하기",
+  //     teacher: "심지나",
+  //     playtime: 3,
+  //   },
+  //   {
+  //     id: "asdasasdd",
+  //     contentCode: "C_B01",
+  //     firstCat: "일반강의",
+  //     secondCat: "일촬",
+  //     title: "초음파: 영상 확인 부터 파악하기",
+  //     teacher: "심지나",
+  //     playtime: 3,
+  //   },
+  //   {
+  //     id: "asdasasfgsddd",
+  //     contentCode: "C_C01",
+  //     firstCat: "취업",
+  //     secondCat: "일촬",
+  //     title: "초음파: 영상 확인 부터 파악하기",
+  //     teacher: "심지나",
+  //     playtime: 3,
+  //   },
+  // ];
 
   // 데이터 초기화
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const { data: univData } = useGetUniv();
+  // const { data: univData } = useGetUniv();
 
-  const data = useMemo(() => univData?.Items || [], [univData]);
+  // const data = useMemo(() => univData?.Items || [], [univData]);
   console.log("data", data);
 
   const columns = useMemo<ColumnDef<any, any>[]>(() => univlist, []);

@@ -15,6 +15,12 @@
     "jsx": "preserve",
     "moduleResolution": "node"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "api/contents_api.js",
+    "query/contents.js"
+  ],
   "exclude": ["node_modules"]
 }
