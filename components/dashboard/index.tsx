@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { GetUser } from "../../api/user_api";
-import { useGetOrdersByCompany } from "../../query/order";
 
 const DashBoardContainer = styled.div`
   display: flex;
@@ -114,25 +112,17 @@ const SecondRight = styled.div`
 `;
 
 export default function DashBoard() {
-  const { data: userData } = useQuery(["user"], () => GetUser(22));
-  const user = useMemo(() => userData || [], [userData]);
-
-  const { data: ordersData, isLoading } = useGetOrdersByCompany(user.companyId);
-  const orders = useMemo(() => ordersData || [], [ordersData]);
-
   return (
     <DashBoardContainer>
       <TopContainer>
         <MenuName>대시보드</MenuName>
         <UserName>유저이름</UserName>
       </TopContainer>
-      <FirstContainer>
-        {isLoading || (
+      {/* <FirstContainer>
           <First1>
             <StatTitle>각종 주문량</StatTitle>
             <div>전체 주문량 : {orders.length}</div>
           </First1>
-        )}
 
         <First2>
           <StatTitle>일별 판매량</StatTitle>
@@ -150,7 +140,7 @@ export default function DashBoard() {
           <StatTitle>카테고리별 판매량</StatTitle>
           <div>전체 주문량 : {orders.length}</div>
         </First5>
-      </FirstContainer>
+      </FirstContainer> */}
       <SecondContainer>
         <SecondLeft>
           <SecondTopLeft>
