@@ -22,9 +22,10 @@ import ArrowDown from "../../components/icons/ArrowDown";
 import ArrowUp from "../../components/icons/ArrowUp";
 import {
   usersColumn,
-  usersData,
+  // usersData,
 } from "../../components/tanstackTable/columns/users";
 import AuthBox from "../../components/authbox";
+import { useGetUsers } from "../../query/contents";
 
 // 스타일 컴포넌트
 const OrderItemListComtainer = styled.div`
@@ -241,12 +242,13 @@ export default function Users() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
+  // const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
+  const { data: usersData, isLoading } = useGetUsers();
 
   // 데이터 초기화
-  const data = useMemo(() => usersData || [], []);
+  const data = useMemo(() => usersData?.Users || [], [usersData]);
   const columns = useMemo<ColumnDef<any, any>[]>(() => usersColumn, []);
-
+  console.log("data", data);
   // 테이블 훅
   const table = useReactTable({
     data,

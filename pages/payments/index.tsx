@@ -27,9 +27,10 @@ import Search from "../../components/icons/Search";
 import ArrowDown from "../../components/icons/ArrowDown";
 import {
   paymentsColumn,
-  paymentsData,
+  // paymentsData,
 } from "../../components/tanstackTable/columns/payments";
 import AuthBox from "../../components/authbox";
+import { useGetPayments } from "../../query/contents";
 
 // 스타일 컴포넌트
 const OrdersComtainer = styled.div`
@@ -257,14 +258,15 @@ export default function Orders() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
-  const { data: ordersData } = useGetOrdersByCompany(user?.companyId);
-  const { data: productData } = useGetUserWithOrders(user?.companyId);
+  // const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
+  // const { data: ordersData } = useGetOrdersByCompany(user?.companyId);
+  // const { data: productData } = useGetUserWithOrders(user?.companyId);
+  const { data: paymentsData } = useGetPayments();
 
   // 데이터 초기화
-  const data = useMemo(() => paymentsData || [], []);
+  const data = useMemo(() => paymentsData?.Items || [], [paymentsData]);
   const columns = useMemo<ColumnDef<any, any>[]>(() => paymentsColumn, []);
-
+  console.log("data", data);
   // 테이블 훅
   const table = useReactTable({
     data,

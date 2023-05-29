@@ -24,6 +24,7 @@ import { productsList } from "../../components/tanstackTable/columns/productsLis
 import Search from "../../components/icons/Search";
 import ArrowDown from "../../components/icons/ArrowDown";
 import ArrowUp from "../../components/icons/ArrowUp";
+import { useGetProductss } from "../../query/contents";
 
 // 스타일 컴포넌트
 const ProductListContainer = styled.div`
@@ -276,29 +277,30 @@ export default function Products() {
 
   const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
 
-  const productData = [
-    {
-      productCode: "C_B01_01",
-      secondCat: "일촬",
-      period: "1개월",
-      title: "초음파: 영상 확인 부터 파악하기",
-      price: 30000,
-      id: "gfj",
-    },
-    {
-      productCode: "C_B01_03",
-      secondCat: "일촬",
-      period: "3개월",
-      title: "초음파: 영상 확인 부터 파악하기",
-      price: 60000,
-      id: "gfggj",
-    },
-  ];
+  // const productData = [
+  //   {
+  //     productCode: "C_B01_01",
+  //     secondCat: "일촬",
+  //     period: "1개월",
+  //     title: "초음파: 영상 확인 부터 파악하기",
+  //     price: 30000,
+  //     id: "gfj",
+  //   },
+  //   {
+  //     productCode: "C_B01_03",
+  //     secondCat: "일촬",
+  //     period: "3개월",
+  //     title: "초음파: 영상 확인 부터 파악하기",
+  //     price: 60000,
+  //     id: "gfggj",
+  //   },
+  // ];
 
   // 데이터 초기화
-  const data = useMemo(() => productData, []);
+  const { data: productsData } = useGetProductss();
+  const data = useMemo(() => productsData?.Items || [], [productsData]);
   const columns = useMemo<ColumnDef<any, any>[]>(() => productsList, []);
-
+  console.log("data", data);
   // 테이블 훅
   const table = useReactTable({
     data,

@@ -25,9 +25,10 @@ import ArrowUp from "../../../components/icons/ArrowUp";
 import { contentlist } from "../../../components/tanstackTable/columns/contentlist";
 import AuthBox from "../../../components/authbox";
 import {
-  univData,
+  // univData,
   univlist,
 } from "../../../components/tanstackTable/columns/univlist";
+import { useGetUniv } from "../../../query/contents";
 
 // 스타일 컴포넌트
 const ProductListContainer = styled.div`
@@ -290,7 +291,11 @@ export default function Products() {
 
   // 데이터 초기화
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const data = useMemo(() => univData, []);
+  const { data: univData } = useGetUniv();
+
+  const data = useMemo(() => univData?.Items || [], [univData]);
+  console.log("data", data);
+
   const columns = useMemo<ColumnDef<any, any>[]>(() => univlist, []);
 
   // 테이블 훅

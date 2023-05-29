@@ -23,10 +23,11 @@ import Search from "../../../components/icons/Search";
 import ArrowDown from "../../../components/icons/ArrowDown";
 import ArrowUp from "../../../components/icons/ArrowUp";
 import {
-  contentData,
+  // contentData,
   contentlist,
 } from "../../../components/tanstackTable/columns/contentlist";
 import AuthBox from "../../../components/authbox";
+import { useGetContents } from "../../../query/contents";
 
 // 스타일 컴포넌트
 const ProductListContainer = styled.div`
@@ -258,10 +259,13 @@ export default function ContentList() {
 
   const { data: user, isLoading } = useQuery(["user"], () => GetUser(22));
 
+  const { data: contentsData } = useGetContents();
+
   // 데이터 초기화
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const data = useMemo(() => contentData, []);
+  const data = useMemo(() => contentsData?.Items || [], []);
   const columns = useMemo<ColumnDef<any, any>[]>(() => contentlist, []);
+  console.log("data", data);
 
   // 테이블 훅
   const table = useReactTable({

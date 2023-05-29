@@ -3,8 +3,8 @@ import { fuzzySort } from "../sorter/fuzzySort";
 
 export const univlist: ColumnDef<any, any>[] = [
   {
-    accessorFn: (row) => row.univName,
-    id: "univName",
+    accessorFn: (row) => row.name,
+    id: "name",
     header: "대학교 이름",
     cell: (info) => info.getValue(),
     filterFn: "fuzzy",
@@ -19,14 +19,6 @@ export const univlist: ColumnDef<any, any>[] = [
     sortingFn: fuzzySort,
   },
   {
-    accessorFn: (row) => row.userQty,
-    id: "userQty",
-    header: "가입인원",
-    cell: (info) => `${info.getValue()} 명`,
-    filterFn: "fuzzy",
-    sortingFn: fuzzySort,
-  },
-  {
     accessorFn: (row) => row.domain,
     id: "domain",
     header: "도메인",
@@ -35,16 +27,16 @@ export const univlist: ColumnDef<any, any>[] = [
     sortingFn: fuzzySort,
   },
   {
-    accessorFn: (row) => row.startPeriod,
-    id: "startPeriod",
+    accessorFn: (row) => row.to,
+    id: "to",
     header: "시작일",
     cell: (info) => info.getValue()?.substr(0, 10),
     filterFn: "fuzzy",
     sortingFn: fuzzySort,
   },
   {
-    accessorFn: (row) => row.endPeriod,
-    id: "endPeriod",
+    accessorFn: (row) => row.from,
+    id: "from",
     header: "종료일",
     cell: (info) => info.getValue()?.substr(0, 10),
     filterFn: "fuzzy",
