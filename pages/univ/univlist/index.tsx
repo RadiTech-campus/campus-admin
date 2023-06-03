@@ -335,11 +335,11 @@ export default function Products() {
       </TopContainer>
       <TableContainer>
         <TopButtonContainer>
-          <TopButton>
-            <Link href="/univ">등록</Link>
-          </TopButton>
           <TopButton selected={router.asPath.includes("/univ/univlist/")}>
             <Link href="/univ/univlist">리스트</Link>
+          </TopButton>
+          <TopButton>
+            <Link href="/univ">등록</Link>
           </TopButton>
         </TopButtonContainer>
         <SearchContainerWrapper>

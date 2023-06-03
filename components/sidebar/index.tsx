@@ -82,9 +82,9 @@ export default function Sidebar(): any {
           </MenuButton>
         </Link>
 
-        <Link href="/univ" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath.includes("/univ/")}>
-            대학등록
+        <Link href="/univ/univlist" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath.includes("/univ")}>
+            대학정보
           </MenuButton>
         </Link>
 

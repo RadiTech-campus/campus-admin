@@ -27,6 +27,7 @@ import {
 } from "../../components/tanstackTable/columns/payments";
 import AuthBox from "../../components/authbox";
 import { useGetPayments } from "../../query/contents";
+import TableCellContainer from "./TableCellContainer";
 
 // 스타일 컴포넌트
 const OrdersComtainer = styled.div`
@@ -387,12 +388,16 @@ export default function Orders() {
               <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell: any) => {
                   return (
-                    <TableCell key={cell.id} cell={cell}>
+                    <TableCellContainer
+                      key={cell.id}
+                      cell={cell}
+                      flexRender={flexRender}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
                       )}
-                    </TableCell>
+                    </TableCellContainer>
                   );
                 })}
               </TableRow>

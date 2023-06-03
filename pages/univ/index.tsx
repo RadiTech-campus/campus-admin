@@ -279,11 +279,11 @@ export default function AddProduct() {
       </TopContainer>
       <TableContainer>
         <TopButtonContainer>
-          <TopButton selected={router.asPath.includes("/univ/")}>
-            <Link href="/univ">등록</Link>
-          </TopButton>
           <TopButton>
             <Link href="/univ/univlist">리스트</Link>
+          </TopButton>
+          <TopButton selected={router.asPath.includes("/univ/")}>
+            <Link href="/univ">등록</Link>
           </TopButton>
         </TopButtonContainer>
         <form>

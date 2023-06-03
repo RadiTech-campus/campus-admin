@@ -155,11 +155,11 @@ const TableCell = styled.td<any>`
   padding: 5px 5px;
   border-bottom: 1px solid rgba(77, 130, 141, 0.2);
   color: ${(props: any) =>
-    props.cell.column.id === "qty" ? "#30acc0" : "#1b3d7c"};
+    props.cell?.column?.id === "qty" ? "#30acc0" : "#1b3d7c"};
   font-weight: ${(props: any) =>
-    props.cell.column.id === "qty" ? "bold" : "bold"};
+    props.cell?.column?.id === "qty" ? "bold" : "bold"};
   font-size: ${(props: any) =>
-    props.cell.column.id === "qty" ? "18px" : "15px"};
+    props.cell?.column?.id === "qty" ? "18px" : "15px"};
 `;
 
 const NavButtonContainer = styled.div`
@@ -346,6 +346,9 @@ export default function Users() {
                     </TableHeaderCellWrapper>
                   );
                 })}
+                <TableHeaderCellWrapper>
+                  <TableHeaderCell>버튼들</TableHeaderCell>
+                </TableHeaderCellWrapper>
               </TableHeader>
             ))}
           </thead>
@@ -362,6 +365,11 @@ export default function Users() {
                     </TableCell>
                   );
                 })}
+                <TableCell>
+                  <button type="button">삭제</button>
+                  <button type="button">메일인증</button>
+                  <button type="button">유저인증</button>
+                </TableCell>
               </TableRow>
             ))}
           </tbody>
