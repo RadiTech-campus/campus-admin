@@ -27,7 +27,6 @@ import {
 } from "../../components/tanstackTable/columns/payments";
 import AuthBox from "../../components/authbox";
 import { useGetPayments } from "../../query/contents";
-import TableCellContainer from "./TableCellContainer";
 
 // 스타일 컴포넌트
 const OrdersComtainer = styled.div`
@@ -165,12 +164,6 @@ const TableRow = styled.tr`
 const TableCell = styled.td<any>`
   padding: 5px 5px;
   border-bottom: 1px solid rgba(77, 130, 141, 0.2);
-  color: ${(props: any) =>
-    props.cell.column.id === "qty" ? "#30acc0" : "#1b3d7c"};
-  font-weight: ${(props: any) =>
-    props.cell.column.id === "qty" ? "bold" : "bold"};
-  font-size: ${(props: any) =>
-    props.cell.column.id === "qty" ? "18px" : "15px"};
 `;
 
 const NavButtonContainer = styled.div`
@@ -388,16 +381,20 @@ export default function Orders() {
               <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell: any) => {
                   return (
-                    <TableCellContainer
-                      key={cell.id}
-                      cell={cell}
-                      flexRender={flexRender}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
+                    <TableCell key={cell.id}>
+                      {cell?.column?.id === "payStatus" ? (
+                        <select name="" id="">
+                          <option>입금대기</option>
+                          <option>결제완료</option>
+                          <option>결제취소</option>
+                        </select>
+                      ) : (
+                        flexRender(
+                          cell?.column?.columnDef?.cell,
+                          cell?.getContext(),
+                        )
                       )}
-                    </TableCellContainer>
+                    </TableCell>
                   );
                 })}
               </TableRow>
