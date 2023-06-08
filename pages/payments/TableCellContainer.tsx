@@ -13,17 +13,16 @@ const TableCell = styled.td<any>`
 `;
 
 export default function TableCellContainer({ cell, flexRender }: any) {
-  console.log("cell", cell.column.id === "payStatus");
   return (
     <TableCell>
-      {cell.column.id === "payStatus" ? (
+      {cell?.column?.id === "payStatus" ? (
         <select name="" id="">
           <option>입금대기</option>
           <option>결제완료</option>
           <option>결제취소</option>
         </select>
       ) : (
-        flexRender(cell.column.columnDef.cell, cell.getContext())
+        flexRender(cell?.column?.columnDef?.cell, cell?.getContext())
       )}
     </TableCell>
   );
