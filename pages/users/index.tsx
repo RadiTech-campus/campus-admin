@@ -245,7 +245,14 @@ export default function Users() {
   const { data: usersData, isLoading } = useGetUsers();
 
   // 데이터 초기화
-  const data = useMemo(() => usersData?.Users || [], [usersData]);
+  const data = useMemo(
+    () =>
+      usersData?.Users?.sort(
+        (a: any, b: any) =>
+          +new Date(a.UserCreateDate) - +new Date(b.UserCreateDate),
+      ) || [],
+    [usersData],
+  );
   const columns = useMemo<ColumnDef<any, any>[]>(() => usersColumn, []);
   console.log("data", data);
   // 테이블 훅

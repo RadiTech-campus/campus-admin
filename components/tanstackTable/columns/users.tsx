@@ -34,6 +34,14 @@ export const usersColumn: ColumnDef<any, any>[] = [
     filterFn: "fuzzy",
     sortingFn: fuzzySort,
   },
+  {
+    accessorFn: (row) => row.UserCreateDate,
+    id: "UserCreateDate",
+    header: "가입일",
+    cell: (info) => info.getValue()?.substr(0, 10),
+    filterFn: "fuzzy",
+    sortingFn: fuzzySort,
+  },
 ];
 
 export const usersData = [
