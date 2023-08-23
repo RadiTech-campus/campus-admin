@@ -21,7 +21,23 @@ export const paymentsColumn: ColumnDef<any, any>[] = [
   {
     accessorFn: (row) => row.payedDate,
     id: "payedDate",
+    header: "결제일",
+    cell: (info) => info.getValue()?.substr(0, 10),
+    filterFn: "fuzzy",
+    sortingFn: fuzzySort,
+  },
+  {
+    accessorFn: (row) => row.endDate,
+    id: "endDate",
     header: "종료일",
+    cell: (info) => info.getValue()?.substr(0, 10),
+    filterFn: "fuzzy",
+    sortingFn: fuzzySort,
+  },
+  {
+    accessorFn: (row) => row.status,
+    id: "status",
+    header: "상태",
     cell: (info) => info.getValue()?.substr(0, 10),
     filterFn: "fuzzy",
     sortingFn: fuzzySort,
@@ -53,7 +69,7 @@ export const paymentsColumn: ColumnDef<any, any>[] = [
   {
     accessorFn: (row) => row.payStatus,
     id: "payStatus",
-    header: "상태",
+    header: "결제상태",
     cell: (info) => info.getValue(),
     filterFn: "fuzzy",
     sortingFn: fuzzySort,

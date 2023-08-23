@@ -27,6 +27,7 @@ import {
 } from "../../components/tanstackTable/columns/payments";
 import AuthBox from "../../components/authbox";
 import { useGetPayments } from "../../query/contents";
+import PaymentRow from "./paymentRow";
 
 // 스타일 컴포넌트
 const OrdersComtainer = styled.div`
@@ -379,22 +380,27 @@ export default function Orders() {
           <tbody>
             {table.getRowModel().rows.map((row: any) => (
               <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell: any) => {
+                {row.getVisibleCells().map((cell: any, i: any) => {
                   return (
-                    <TableCell key={cell.id}>
-                      {cell?.column?.id === "payStatus" ? (
-                        <select name="" id="">
-                          <option>입금대기</option>
-                          <option>결제완료</option>
-                          <option>결제취소</option>
-                        </select>
-                      ) : (
-                        flexRender(
-                          cell?.column?.columnDef?.cell,
-                          cell?.getContext(),
-                        )
-                      )}
-                    </TableCell>
+                    <PaymentRow
+                      key={`${i + 1}a`}
+                      cell={cell}
+                      flexRender={flexRender}
+                    />
+                    // <TableCell key={cell.id}>
+                    //   {cell?.column?.id === "payStatus" ? (
+                    //     <select name="" id="">
+                    //       <option>입금대기</option>
+                    //       <option>결제완료</option>
+                    //       <option>결제취소</option>
+                    //     </select>
+                    //   ) : (
+                    //     flexRender(
+                    //       cell?.column?.columnDef?.cell,
+                    //       cell?.getContext(),
+                    //     )
+                    //   )}
+                    // </TableCell>
                   );
                 })}
               </TableRow>
