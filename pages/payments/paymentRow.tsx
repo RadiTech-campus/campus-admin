@@ -8,9 +8,9 @@ const TableCell = styled.td<any>`
 `;
 
 export default function PaymentRow({ cell, flexRender }: any) {
-  const [st, setSt] = useState(cell.row.original.payStatus);
+  const [st, setSt] = useState(cell?.row?.original?.payStatus);
   return (
-    <TableCell key={cell.id}>
+    <TableCell key={cell?.id}>
       {cell?.column?.id === "payStatus" ? (
         <select
           name=""
@@ -20,7 +20,7 @@ export default function PaymentRow({ cell, flexRender }: any) {
             setSt(e.target.value);
             try {
               updatePayStatus({
-                id: cell.row.original.id,
+                id: cell?.row?.original?.id,
                 payStatus: e.target.value,
               });
               alert(`결제상태가 ${e.target.value}로 바뀌었습니다`);

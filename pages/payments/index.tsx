@@ -257,7 +257,6 @@ export default function Orders() {
   // 데이터 초기화
   const data = useMemo(() => paymentsData?.Items || [], [paymentsData]);
   const columns = useMemo<ColumnDef<any, any>[]>(() => paymentsColumn, []);
-  console.log("data", data);
   // 테이블 훅
   const table = useReactTable({
     data,
