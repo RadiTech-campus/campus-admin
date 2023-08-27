@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { updatePayStatus } from "../../api/contents_api";
 
 const TableCell = styled.td<any>`
@@ -8,7 +8,11 @@ const TableCell = styled.td<any>`
 `;
 
 export default function PaymentRow({ cell, flexRender }: any) {
-  const [st, setSt] = useState(cell?.row?.original?.payStatus);
+  const [st, setSt] = useState("");
+  useEffect(() => {
+    setSt(cell?.row?.original?.payStatus);
+  }, []);
+
   return (
     <TableCell key={cell?.id}>
       {cell?.column?.id === "payStatus" ? (
