@@ -23,22 +23,20 @@ export default function PaymentRow({ cell, flexRender }: any) {
           onChange={(e) => {
             setSt(e.target.value);
             try {
-              if (e && e.target && e.target.value === "결제완료") {
-                const d = new Date();
-                updatePayStatus({
-                  id: cell?.row?.original?.id,
-                  payStatus: e.target.value,
-                  payedDate: d,
-                  endData: new Date(d.setMonth(d.getMonth() + 3)),
-                });
-                alert(`결제상태가 ${e.target.value}로 바뀌었습니다.\
-                시작일은 ${d}이고, 종료일은 ${d.setMonth(
-                  d.getMonth() + 3,
-                )} 입니다.
-                `);
-              } else {
-                alert(`결제상태가 ${e.target.value}로 바뀌었습니다.`);
-              }
+              const today = new Date();
+              const addedDate = new Date(today);
+              addedDate.setMonth(
+                today.getMonth() +
+                  Number(cell?.row?.original?.productCode.slice(-2)),
+              );
+              updatePayStatus({
+                id: cell?.row?.original?.id,
+                payStatus: e.target.value,
+                applyedStatus: e.target.value === "결제완료" ? "사용중" : "",
+                payedDate: e.target.value === "결제완료" ? addedDate : "",
+                endDate: e.target.value === "결제완료" ? addedDate : "",
+              });
+              alert(`결제상태가 ${e.target.value}로 바뀌었습니다`);
             } catch (error) {
               alert("에러발생 개발자에게 문의해 주세요");
             }
