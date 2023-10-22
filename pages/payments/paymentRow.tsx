@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { flexRender } from "@tanstack/react-table";
 import { updatePayStatus } from "../../api/contents_api";
 
 const TableCell = styled.td<any>`
@@ -8,7 +7,7 @@ const TableCell = styled.td<any>`
   border-bottom: 1px solid rgba(77, 130, 141, 0.2);
 `;
 
-export default function PaymentRow({ cell }: any) {
+export default function PaymentRow({ cell, flexRender }: any) {
   const [st, setSt] = useState("");
   useEffect(() => {
     setSt(cell?.row?.original?.payStatus);
@@ -51,7 +50,6 @@ export default function PaymentRow({ cell }: any) {
         </select>
       ) : (
         flexRender(cell?.column?.columnDef?.cell, cell?.getContext())
-        // flexRender(cell?.column?.columnDef?.cell, cell?.getContext())
       )}
     </TableCell>
   );

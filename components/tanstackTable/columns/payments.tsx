@@ -35,8 +35,8 @@ export const paymentsColumn: ColumnDef<any, any>[] = [
     sortingFn: fuzzySort,
   },
   {
-    accessorFn: (row) => row.applyedStatus,
-    id: "applyedStatus",
+    accessorFn: (row) => row.status,
+    id: "status",
     header: "상태",
     cell: (info) => info.getValue()?.substr(0, 10),
     filterFn: "fuzzy",
