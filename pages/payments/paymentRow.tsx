@@ -30,7 +30,7 @@ export default function PaymentRow({ cell }: any) {
                   id: cell?.row?.original?.id,
                   payStatus: e.target.value,
                   payedDate: d,
-                  endData: d.setMonth(d.getMonth() + 3),
+                  endData: new Date(d.setMonth(d.getMonth() + 3)),
                 });
                 alert(`결제상태가 ${e.target.value}로 바뀌었습니다.\
                 시작일은 ${d}이고, 종료일은 ${d.setMonth(
