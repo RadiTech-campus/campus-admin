@@ -9,9 +9,9 @@ const TopContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding-top: 40px;
+  padding-top: 20px;
   background-color: #0f3479;
-  height: 100px;
+  height: 800px;
 `;
 const TableContainer = styled.div`
   padding: 15px 20px;

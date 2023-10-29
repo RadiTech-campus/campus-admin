@@ -35,9 +35,9 @@ const TopContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding-top: 40px;
+  padding-top: 20px;
   background-color: #0f3479;
-  height: 100px;
+  height: 80px;
 `;
 
 const MenuName = styled.div`
@@ -55,8 +55,8 @@ const UserName = styled.div`
 `;
 
 const TableContainer = styled.div`
-  padding: 15px 20px;
-  margin: -50px 40px 10px;
+  padding: 10px 10px;
+  margin: -40px 20px 10px;
   border-radius: 10px;
   background-color: #fbfeff;
 `;
@@ -114,7 +114,7 @@ const SearchContainer = styled.div`
   border: 1px solid #1b3d7c;
   border-radius: 20px;
   padding: 10px;
-  margin: 15px 0px;
+  margin: 5px 0px;
   display: flex;
   justify-content: space-between;
 

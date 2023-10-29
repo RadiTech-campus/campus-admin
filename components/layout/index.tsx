@@ -8,12 +8,13 @@ const LayoutContainer = styled.div`
 `;
 
 const LeftContainer = styled.div`
-  flex: 0.15;
+  /* flex: 0.15; */
 `;
 
 const RightContainer = styled.div`
-  flex: 0.85;
+  /* flex: 0.85; */
   display: flex;
+  width: 100%;
   flex-direction: column;
   background-color: #e7f1fb;
 `;

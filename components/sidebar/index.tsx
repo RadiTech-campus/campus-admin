@@ -7,7 +7,8 @@ import { useRouter } from "next/router";
 const SidebarContainer = styled.div`
   height: 100vh;
   display: flex;
-  flex: 0.15;
+  /* flex: 0.1; */
+  width: 200px;
   background-color: #fbfeff;
   flex-direction: column;
   align-items: flex-start;
@@ -24,7 +25,7 @@ const BottomContainer = styled.div`
 const CompanyName = styled.div`
   width: 100%;
   color: #2a62ff;
-  font-size: 23px;
+  font-size: 18px;
   text-align: center;
   margin: 30px auto;
 
@@ -38,11 +39,11 @@ const MenuButton = styled.div<any>`
   width: 100%;
   border-left: ${(props) =>
     props.selected ? "3px #2A62FF solid" : "3px transparent"};
-  padding: 20px 0px 20px 40px;
+  padding: 5px 0px 5px 10px;
   color: ${(props) => (props.selected ? "#2A62FF" : "#a4a4a4")};
-  font-size: larger;
+  font-size: large;
   background-color: ${(props) => (props.selected ? "#eff6fd" : "")};
-  margin: 20px 0px 20px 40px;
+  margin: 10px 0px 10px 20px;
 
   a {
     text-decoration: none;
@@ -82,11 +83,11 @@ export default function Sidebar(): any {
           </MenuButton>
         </Link>
 
-        <Link href="/univ/univlist" style={{ textDecoration: "none" }}>
+        {/* <Link href="/univ/univlist" style={{ textDecoration: "none" }}>
           <MenuButton selected={router.asPath.includes("/univ")}>
             대학정보
           </MenuButton>
-        </Link>
+        </Link> */}
 
         {/* {!isLoading && (
           <MenuButton>
