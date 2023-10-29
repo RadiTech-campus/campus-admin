@@ -46,6 +46,7 @@ export default function PaymentRow({ cell }: any) {
           <option value="입금대기">입금대기</option>
           <option value="결제완료">결제완료</option>
           <option value="결제취소">결제취소</option>
+          <option value="기간만료">기간만료</option>
         </select>
       ) : (
         flexRender(cell?.column?.columnDef?.cell, cell?.getContext())
