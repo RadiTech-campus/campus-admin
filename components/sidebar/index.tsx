@@ -60,28 +60,34 @@ export default function Sidebar(): any {
         <CompanyName>
           <Link href="/">Radi-Tech Admin</Link>
         </CompanyName>
-
-        <Link href="/contents/contentlist" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath.includes("/contents/")}>
-            컨텐츠
-          </MenuButton>
-        </Link>
-        <Link href="/products" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath.includes("/products/")}>
-            상품목록
-          </MenuButton>
-        </Link>
         <Link href="/users" style={{ textDecoration: "none" }}>
           <MenuButton selected={router.asPath.includes("/users/")}>
             회원정보
           </MenuButton>
         </Link>
 
-        <Link href="/payments" style={{ textDecoration: "none" }}>
-          <MenuButton selected={router.asPath.includes("/payments/")}>
-            결제정보
+        <Link href="/new-payments" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath.includes("/new-payments/")}>
+            (신)결제정보
           </MenuButton>
         </Link>
+
+        <Link href="/payments" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath.includes("/payments/")}>
+            (구)결제정보
+          </MenuButton>
+        </Link>
+
+        {/* <Link href="/contents/contentlist" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath.includes("/contents/")}>
+            컨텐츠
+          </MenuButton>
+        </Link> */}
+        {/* <Link href="/products" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath.includes("/products/")}>
+            상품목록
+          </MenuButton>
+        </Link> */}
 
         {/* <Link href="/univ/univlist" style={{ textDecoration: "none" }}>
           <MenuButton selected={router.asPath.includes("/univ")}>
