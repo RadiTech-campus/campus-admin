@@ -22,25 +22,25 @@ export default function PaymentRow({ cell }: any) {
           id=""
           value={st}
           onChange={(e) => {
-            setSt(e.target.value);
-            try {
-              const today = new Date();
-              const addedDate = new Date(today);
-              addedDate.setMonth(
-                today.getMonth() +
-                  Number(cell?.row?.original?.productCode.slice(-2)),
-              );
-              updatePayStatus({
-                id: cell?.row?.original?.id,
-                payStatus: e.target.value,
-                applyedStatus: e.target.value === "결제완료" ? "사용중" : "",
-                payedDate: e.target.value === "결제완료" ? today : "",
-                endDate: e.target.value === "결제완료" ? addedDate : "",
-              });
-              alert(`결제상태가 ${e.target.value}로 바뀌었습니다`);
-            } catch (error) {
-              alert("에러발생 개발자에게 문의해 주세요");
-            }
+            // setSt(e.target.value);
+            // try {
+            //   const today = new Date();
+            //   const addedDate = new Date(today);
+            //   addedDate.setMonth(
+            //     today.getMonth() +
+            //       Number(cell?.row?.original?.productCode.slice(-2)),
+            //   );
+            //   updatePayStatus({
+            //     id: cell?.row?.original?.id,
+            //     payStatus: e.target.value,
+            //     applyedStatus: e.target.value === "결제완료" ? "사용중" : "",
+            //     payedDate: e.target.value === "결제완료" ? today : "",
+            //     endDate: e.target.value === "결제완료" ? addedDate : "",
+            //   });
+            //   alert(`결제상태가 ${e.target.value}로 바뀌었습니다`);
+            // } catch (error) {
+            //   alert("에러발생 개발자에게 문의해 주세요");
+            // }
           }}
         >
           <option value="입금대기">입금대기</option>

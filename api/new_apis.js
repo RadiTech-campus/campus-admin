@@ -7,3 +7,35 @@ export async function getAllPayments() {
   );
   return data;
 }
+
+export async function getNewAllProducts() {
+  const { data } = await axios(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_NEW_END_POINT}/product/all`,
+    { withCredentials: true },
+  );
+  return data;
+}
+
+export async function getNewAllContents() {
+  const { data } = await axios(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_NEW_END_POINT}/content`,
+    { withCredentials: true },
+  );
+  return data;
+}
+
+export async function getNewAllLectures() {
+  const { data } = await axios(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_NEW_END_POINT}/lecture`,
+    { withCredentials: true },
+  );
+  return data;
+}
+
+export async function getNewAllLectureDetails() {
+  const { data } = await axios(
+    `${process.env.NEXT_PUBLIC_REACT_APP_API_NEW_END_POINT}/lectureDetail`,
+    { withCredentials: true },
+  );
+  return data;
+}

@@ -71,6 +71,26 @@ export default function Sidebar(): any {
             (신)결제정보
           </MenuButton>
         </Link>
+        <Link href="/new-products" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath.includes("/new-products/")}>
+            상품관리
+          </MenuButton>
+        </Link>
+        <Link href="/new-contents" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath.includes("/new-contents/")}>
+            콘텐츠관리
+          </MenuButton>
+        </Link>
+        <Link href="/new-lectures" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath.includes("/new-lectures/")}>
+            강좌관리
+          </MenuButton>
+        </Link>
+        <Link href="/new-lecturedetails" style={{ textDecoration: "none" }}>
+          <MenuButton selected={router.asPath.includes("/new-lecturedetails/")}>
+            강좌관리
+          </MenuButton>
+        </Link>
 
         <Link href="/payments" style={{ textDecoration: "none" }}>
           <MenuButton selected={router.asPath.includes("/payments/")}>

@@ -43,7 +43,8 @@ export const newPaymentsColumn: ColumnDef<any, any>[] = [
     sortingFn: fuzzySort,
   },
   {
-    accessorFn: (row) => row.product.productTitle,
+    // accessorFn: (row) => row.product.productTitle,
+    accessorFn: (row) => row?.product?.productTitle,
     id: "productTitle",
     header: "상품이름",
     cell: (info) => info.getValue(),
