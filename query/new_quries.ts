@@ -21,24 +21,32 @@ export const useGetNewPayments = () => {
   });
 };
 
+interface IUpdateGorupMutation {
+  id: number | undefined;
+  payStatus: string | undefined;
+}
+
 export function useUpdatePayment() {
   const queryClient = useQueryClient();
 
-  return useMutation((payload) => updatePayment(payload), {
-    onSuccess: () => {
-      console.log("onSuccess");
-      queryClient.invalidateQueries(["new", "payments"]);
+  return useMutation(
+    (payload: IUpdateGorupMutation) => updatePayment(payload),
+    {
+      onSuccess: () => {
+        console.log("onSuccess");
+        queryClient.invalidateQueries(["new", "payments"]);
+      },
+      onError: (e) => {
+        console.log("e", e);
+      },
+      onSettled(data, error, variables, context) {
+        console.log("data", data);
+        console.log("error", error);
+        console.log("variables", variables);
+        console.log("context", context);
+      },
     },
-    onError: (e) => {
-      console.log("e", e);
-    },
-    onSettled(data, error, variables, context) {
-      console.log("data", data);
-      console.log("error", error);
-      console.log("variables", variables);
-      console.log("context", context);
-    },
-  });
+  );
 }
 
 export const useGetNewProducts = () => {

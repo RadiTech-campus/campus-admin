@@ -27,7 +27,7 @@ export default function PaymentRow({ cell }: any) {
             e.preventDefault();
             setStatus(e.target.value);
             try {
-              paymentMutate({ id: id, payStatus: e.target.value });
+              paymentMutate({ id, payStatus: e.target.value });
               alert(`결제상태가 ${e.target.value}로 바뀌었습니다`);
             } catch (error) {
               alert("에러발생 개발자에게 문의해 주세요");
