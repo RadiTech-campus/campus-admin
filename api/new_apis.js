@@ -8,6 +8,16 @@ export async function getAllPayments() {
   return data;
 }
 
+export async function updatePayment(payload) {
+  const { data } = await axios({
+    method: "PATCH",
+    url: `${process.env.NEXT_PUBLIC_REACT_APP_API_NEW_END_POINT}/payment`,
+    data: payload,
+    withCredentials: true,
+  });
+  return data;
+}
+
 export async function getNewAllProducts() {
   const { data } = await axios(
     `${process.env.NEXT_PUBLIC_REACT_APP_API_NEW_END_POINT}/product/all`,

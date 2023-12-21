@@ -1,10 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getAllPayments,
   getNewAllContents,
   getNewAllLectureDetails,
   getNewAllLectures,
   getNewAllProducts,
+  updatePayment,
 } from "../api/new_apis";
 
 export const useGetNewPayments = () => {
@@ -19,6 +20,26 @@ export const useGetNewPayments = () => {
     },
   });
 };
+
+export function useUpdatePayment() {
+  const queryClient = useQueryClient();
+
+  return useMutation((payload) => updatePayment(payload), {
+    onSuccess: () => {
+      console.log("onSuccess");
+      queryClient.invalidateQueries(["new", "payments"]);
+    },
+    onError: (e) => {
+      console.log("e", e);
+    },
+    onSettled(data, error, variables, context) {
+      console.log("data", data);
+      console.log("error", error);
+      console.log("variables", variables);
+      console.log("context", context);
+    },
+  });
+}
 
 export const useGetNewProducts = () => {
   return useQuery({
